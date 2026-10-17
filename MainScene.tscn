@@ -1,6 +1,53 @@
-[gd_scene load_steps=2 format=3 uid="uid://dns2jaulhent8"]
+[gd_scene load_steps=12 format=3 uid="uid://dns2jaulhent8"]
 
 [ext_resource type="Script" uid="uid://1wy5aytfl7r8" path="res://scripts/main_scene.gd" id="1_3mqji"]
+[ext_resource type="Texture2D" uid="uid://dpl1qwjog1qv6" path="res://assets/sprites/background/bgPapel.png" id="2_rf2cd"]
+[ext_resource type="Texture2D" uid="uid://bt6rfoc8ucp6u" path="res://assets/sprites/logo/logo_justsay.png" id="2_rpqi1"]
+[ext_resource type="Texture2D" uid="uid://d0wrxf0t0ta2o" path="res://assets/sprites/logo/logo_no.png" id="3_uxrcv"]
+[ext_resource type="Texture2D" uid="uid://bprihvcngauk3" path="res://assets/sprites/botones/btnInicio.png" id="5_a814b"]
+[ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_5crlr"]
+[ext_resource type="Script" uid="uid://3u8dndx01tki" path="res://scripts/typewriter.gd" id="7_5crlr"]
+
+[sub_resource type="Theme" id="Theme_5crlr"]
+default_font = ExtResource("6_5crlr")
+default_font_size = 48
+
+[sub_resource type="Animation" id="Animation_a814b"]
+resource_name = "typing"
+length = 13.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("txtIntro:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.83333, 3.5, 3.99032, 4.48436, 9.69797, 10.215, 12.5, 12.9, 13),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.307261, 0.307, 0.346976, 0.345, 0.799374, 0.8, 0.99, 0.99, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_5crlr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("txtIntro:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbc2u"]
+_data = {
+&"RESET": SubResource("Animation_5crlr"),
+&"typing": SubResource("Animation_a814b")
+}
 
 [node name="MainScene" type="Control"]
 layout_mode = 3
@@ -11,20 +58,78 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3mqji")
 
+[node name="FondoPapel" type="TextureRect" parent="."]
+layout_mode = 2
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_rf2cd")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.00094, 1.00799)
+
+[node name="Logo_JustSay" type="TextureRect" parent="Container"]
+layout_mode = 2
+offset_left = 279.0
+offset_top = 93.0
+offset_right = 908.0
+offset_bottom = 476.0
+texture = ExtResource("2_rpqi1")
+
+[node name="Logo_NO" type="TextureRect" parent="Container"]
+layout_mode = 2
+offset_left = 645.0
+offset_top = 338.0
+offset_right = 907.0
+offset_bottom = 568.0
+texture = ExtResource("3_uxrcv")
+
 [node name="btnJugar" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 928.0
-offset_top = 621.0
-offset_right = 1252.0
-offset_bottom = 690.0
+offset_left = 1046.0
+offset_top = 596.0
+offset_right = 1224.0
+offset_bottom = 685.0
+texture_normal = ExtResource("5_a814b")
 
 [node name="Label" type="Label" parent="btnJugar"]
+visible = false
 layout_mode = 0
-offset_right = 324.0
-offset_bottom = 69.0
+offset_left = 32.0
+offset_top = -146.0
+offset_right = 356.0
+offset_bottom = -77.0
 text = "Jugar"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
+
+[node name="txtIntro" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 94.0
+offset_top = 99.0
+offset_right = 1218.0
+offset_bottom = 649.0
+scale = Vector2(1.01758, 0.945503)
+theme = SubResource("Theme_5crlr")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Otro día para ir a la peor guerra que la humanidad haya conocido jamás… la vida.
+
+Entre tus pendientes, tus compañeros y las personas alborotadas, siempre hay alguien que te pide algo...
+
+Me pregunto si esta vez... sabré decirles que no"
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="txtIntroAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hbc2u")
+}
+script = ExtResource("7_5crlr")
 
 [connection signal="pressed" from="btnJugar" to="." method="_on_btn_jugar_pressed"]
