@@ -10,3 +10,10 @@ script = ExtResource("1_45dpb")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_hc7eg")
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 37.0
+offset_right = 567.0
+offset_bottom = 124.0

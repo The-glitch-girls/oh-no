@@ -1,3 +1,36 @@
-[gd_scene format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=5 format=3 uid="uid://bw80cwacc1wpj"]
+
+[ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
+[ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
+[ext_resource type="Texture2D" uid="uid://rjwxkxmp6seh" path="res://assets/sprites/personajeMiniGame.png" id="2_y5gxj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
+size = Vector2(132.5, 184)
 
 [node name="MiniGame" type="Node2D"]
+script = ExtResource("1_y5gxj")
+level = 3
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(602, 626)
+script = ExtResource("1_y4rhp")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(1, 1.046)
+texture = ExtResource("2_y5gxj")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(1.75, 10)
+shape = SubResource("RectangleShape2D_1te6h")
+metadata/_edit_lock_ = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+
+[node name="RoundTimer" type="Timer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TimeLabel" type="Label" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 23.0
