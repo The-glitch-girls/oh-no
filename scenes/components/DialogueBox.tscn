@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://comrhpr07vomq"]
+
+[ext_resource type="Script" uid="uid://b15ikcwenwi7h" path="res://scripts/dialogue_box.gd" id="1_bs717"]
+
+[node name="DialogueBox" type="PanelContainer"]
+script = ExtResource("1_bs717")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
