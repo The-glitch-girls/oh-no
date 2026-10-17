@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dync77kmn20x7"]
+
+[ext_resource type="Script" uid="uid://den0luljfxm1t" path="res://scripts/intrusive_thought.gd" id="1_3vhcj"]
+[ext_resource type="Texture2D" uid="uid://3n37wnokjkh7" path="res://assets/sprites/obstaculo.png" id="2_45mwt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ep32f"]
+radius = 35.0
+
+[node name="IntrusiveThought" type="Area2D"]
+script = ExtResource("1_3vhcj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_45mwt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -3)
+shape = SubResource("CircleShape2D_ep32f")
