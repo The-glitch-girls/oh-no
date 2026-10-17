@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dns2jaulhent8"]
+[gd_scene load_steps=2 format=3 uid="uid://dns2jaulhent8"]
+
+[ext_resource type="Script" uid="uid://1wy5aytfl7r8" path="res://scripts/main_scene.gd" id="1_3mqji"]
 
 [node name="MainScene" type="Control"]
 layout_mode = 3
@@ -7,3 +9,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_3mqji")
+
+[node name="btnJugar" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 928.0
+offset_top = 621.0
+offset_right = 1252.0
+offset_bottom = 690.0
+
+[node name="Label" type="Label" parent="btnJugar"]
+layout_mode = 0
+offset_right = 324.0
+offset_bottom = 69.0
+text = "Jugar"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="btnJugar" to="." method="_on_btn_jugar_pressed"]
