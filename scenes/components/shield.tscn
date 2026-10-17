@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnukucv4v4ytt" path="res://assets/sprites/escudo.png" id="2_tfq3a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d61x1"]
-radius = 19.5256
+radius = 44.0454
 
 [node name="Shield" type="Area2D"]
 script = ExtResource("1_o7kb7")
@@ -13,5 +13,5 @@ script = ExtResource("1_o7kb7")
 texture = ExtResource("2_tfq3a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 0)
+position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_d61x1")
