@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://cqfxxyw1vndv5"]
+[gd_scene load_steps=2 format=3 uid="uid://cqfxxyw1vndv5"]
+
+[ext_resource type="Texture2D" uid="uid://dg46eseomlego" path="res://assets/sprites/background/bgFinal.png" id="1_jncbw"]
 
 [node name="Final" type="Node2D"]
+
+[node name="bgFinal" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_jncbw")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2jsnss2txctu"
-path="res://.godot/imported/prota_respuesta_complaciente_alt.png-32f3d57ecaaca9dc60b1128822d2b86d.ctex"
+uid="uid://j13fptx3cslo"
+path="res://.godot/imported/refuse_alt.png-7f6e6317560924d5070537a7417e4b6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/jugador/prota_respuesta_complaciente_alt.png"
-dest_files=["res://.godot/imported/prota_respuesta_complaciente_alt.png-32f3d57ecaaca9dc60b1128822d2b86d.ctex"]
+source_file="res://assets/sprites/jugador/refuse_alt.png"
+dest_files=["res://.godot/imported/refuse_alt.png-7f6e6317560924d5070537a7417e4b6e.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d38rribceg05o" path="res://scripts/levels/nivel_1_colegio.gd" id="1_6oakp"]
 [ext_resource type="Texture2D" uid="uid://3x10fm6nct7y" path="res://assets/sprites/background/bgEtapa1.png" id="1_mjf5d"]
 [ext_resource type="Texture2D" uid="uid://0kv83u0vhcmj" path="res://assets/sprites/enemigos/diego.png" id="2_5vrj8"]
-[ext_resource type="Texture2D" uid="uid://uwyog4x84e3b" path="res://assets/sprites/jugador/prota_respuesta_complaciente.png" id="2_t4yib"]
+[ext_resource type="Texture2D" uid="uid://uwyog4x84e3b" path="res://assets/sprites/jugador/accept.png" id="2_t4yib"]
 [ext_resource type="Texture2D" uid="uid://5qldilijjyi4" path="res://assets/sprites/dialogo/mensaje.png" id="3_qddh7"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="4_t4yib"]
 [ext_resource type="Texture2D" uid="uid://cd0j2aettlikv" path="res://assets/sprites/dialogo/enemigo_pill.png" id="7_rjahh"]
@@ -37,21 +37,18 @@ shader_parameter/progress = 0.25
 script = ExtResource("1_6oakp")
 
 [node name="bg" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1280.0
-offset_bottom = 720.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -4.0
+offset_right = 1671.0
+offset_bottom = 939.0
+scale = Vector2(0.77, 0.77)
 texture = ExtResource("1_mjf5d")
 
 [node name="jugador" type="TextureRect" parent="."]
-offset_left = 373.375
-offset_top = 6.0
-offset_right = 2506.38
-offset_bottom = 2873.0
-scale = Vector2(0.25, 0.25)
+offset_left = 405.37
+offset_top = 17.0
+offset_right = 2538.38
+offset_bottom = 2884.0
+scale = Vector2(0.22, 0.22)
 texture = ExtResource("2_t4yib")
 
 [node name="enemigo" type="TextureRect" parent="."]
@@ -71,9 +68,9 @@ texture = ExtResource("2_5vrj8")
 
 [node name="mensaje" type="TextureRect" parent="."]
 offset_left = 197.5
-offset_top = 510.0
+offset_top = 560.0
 offset_right = 2550.5
-offset_bottom = 917.0
+offset_bottom = 967.0
 scale = Vector2(0.376, 0.376)
 texture = ExtResource("3_qddh7")
 
@@ -84,9 +81,9 @@ anchor_top = 0.084
 anchor_right = 0.974
 anchor_bottom = 0.74
 offset_left = 251.0
-offset_top = 526.0
+offset_top = 576.0
 offset_right = 1071.0
-offset_bottom = 644.0
+offset_bottom = 694.0
 theme = SubResource("Theme_6oakp")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_constants/line_separation = 10
@@ -94,9 +91,9 @@ theme_override_font_sizes/normal_font_size = 20
 
 [node name="enemigo_nombre" type="TextureRect" parent="."]
 offset_left = 290.0
-offset_top = 481.0
+offset_top = 531.0
 offset_right = 464.0
-offset_bottom = 526.0
+offset_bottom = 576.0
 texture = ExtResource("7_rjahh")
 
 [node name="en_label" type="Label" parent="enemigo_nombre"]
@@ -110,9 +107,9 @@ vertical_alignment = 1
 [node name="jugador_nombre" type="TextureRect" parent="."]
 visible = false
 offset_left = 290.0
-offset_top = 481.0
+offset_top = 531.0
 offset_right = 464.0
-offset_bottom = 526.0
+offset_bottom = 576.0
 texture = ExtResource("8_rjahh")
 
 [node name="flecha_siguiente" type="TextureButton" parent="."]

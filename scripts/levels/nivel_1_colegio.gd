@@ -316,7 +316,9 @@ func _mostrar_respuesta_minijuego() -> void:
 
 	tipo_dialogo = "respuesta"
 	indice_dialogo = 0
-
+	
+	var nombre_animacion = GlobalManager.respuestaSeleccionada
+	jugador_sprite.texture = load("res://assets/sprites/jugador/"+nombre_animacion+".png")
 	jugador_sprite.show()
 	jugador_nombre.show()
 	burbuja_pensamiento.show()
