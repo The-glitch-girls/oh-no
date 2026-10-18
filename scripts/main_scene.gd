@@ -3,11 +3,13 @@ extends Control
 @onready var txtIntro: RichTextLabel = $txtIntro
 @onready var logoContainer: Control = $Container
 @onready var animation_player: AnimationPlayer = $txtIntroAnimation
+@onready var sfxEscribir: AudioStreamPlayer = $SfxEscribir
 
 func _ready() -> void:
 	logoContainer.visible = true
 	txtIntro.visible = false
 	$txtIntroAnimation.stop()
+	sfxEscribir.stop()
 	
 func _on_btn_jugar_pressed() -> void:
 	logoContainer.visible = false
