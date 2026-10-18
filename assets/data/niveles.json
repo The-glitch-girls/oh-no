@@ -1,0 +1,73 @@
+{
+  "config": {
+	"initial_self_esteem": 20,
+	"initial_time": 120
+  },
+  "stages": [
+	{
+	  "id": "escuela",
+	  "title": "La escuela",
+	  "characters": [
+		{
+		  "id": "enemigo_01",
+		  "name": "Diego",
+		  "request": "Diego: Oye, ¿Estas sola? ¡Pues estás de suerte!. Te invito a ver la película de terror 'Delfines Asesinos 8'. No todos los días tienes la oportunidad de salir con alguien tan genial como yo. ¿Qué te parece? Te ayudará a ser popular. Ninguna chica rechaza mi encanto",
+		  "automatic_thought": "Odio las películas de terror",
+		  "automatic_response": "Ehhh... creo que puedo hacerlo, aunque tengo un ensayo muy importante.",
+		  "minigame": {
+			"duration_seconds": 8,
+			"max_shields": 5,
+			"responses": [
+			  {
+				"id": "accept",
+				"text": "Delfines asesinos 8… Wow.. Me encanta esa saga…",
+				"thought": "¿OCHO PELÍCULAS? ¡¿OCHO?! ¿Cuántas veces más pueden matar a la gente unos delfines? Odio las películas de terror.",
+				"min_shields": 0,
+				"self_esteem_change": -5,
+				"result": "accepted"
+			  },
+			  {
+				"id": "negotiate",
+				"text": "Ah… bueno,  supongo que podríamos ir al cine… pero no me gustan las películas de terror. ¿No podemos ver otra cosa? Hay una peli nueva que parece divertida…",
+				"thought": "Al final terminé aceptando la salida, por lo menos no tendré que ver 2 horas de delfines asesinos.",
+				"min_shields": 2,
+				"self_esteem_change": 3,
+				"result": "negotiated"
+			  },
+			  {
+				"id": "refuse",
+				"text": "No, gracias. Las películas de terror no son lo mío y si siete películas no lograron convencerme, no creo que la octava haga milagros. Además, no me interesa salir contigo, pero agradezco la invitación.",
+				"thought": "No tengo por qué aceptar una salida que no quiero solo para no herir su ego. ¡Ojalá esos delfines tengan más suerte que él!",
+				"min_shields": 4,
+				"self_esteem_change": 5,
+				"result": "refused"
+			  }
+			]
+		  },
+		  "consequences": {
+			"accept": {
+			  "time_cost": 10,
+			  "enemy_reaction": [
+					"Sabía que dirías que sí. No cualquiera tiene la suerte de que yo la invite al cine. Te va a encantar la película; son 2 horas de pura magia. Ya verás."
+				]
+			},
+			"negotiate": {
+			  "time_cost": 4,
+			  "enemy_reaction": [
+					"Bueno…  Pero te advierto que te estás perdiendo una obra maestra del terror cetáceo. Está bien, veremos tu película. Paso por ti a las siete,",
+					"No pienso volver a cambiar mis planes a última hora. ¡Vamos, que no todos los días te invito a salir!"
+				]
+			},
+			"refuse": {
+			  "time_cost": 0,
+			  "enemy_reaction": [
+					"Bueno…  Pero te advierto que te estás perdiendo una obra maestra del terror cetáceo. Está bien, veremos tu película. Paso por ti a las siete,",
+					"No pienso volver a cambiar mis planes a última hora. ¡Vamos, que no todos los días te invito a salir!"
+				]
+			}
+		  }
+		}
+	  ]
+	}
+  ]
+}
