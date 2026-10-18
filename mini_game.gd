@@ -149,7 +149,18 @@ func _finish_round(reason: String) -> void:
 	GlobalManager.escudosRecogidos = shields_caught
 	GlobalManager.motivoFinalMinijuego = finish_reason
 	GlobalManager.pensamientosAtrapados = thoughts_caught
+	# Resultado según los escudos obtenidos
 	GlobalManager.colorResultadoMinijuego = get_result_color()
+	
+	# Convertir el color en una respuesta narrativa
+	GlobalManager.respuestaSeleccionada = (
+		GlobalManager.respuesta_por_color(
+			GlobalManager.colorResultadoMinijuego
+		)
+	)
+	
+	# Indicar que el minijuego terminó
+	GlobalManager.minijuegoCompletado = true
 
 	spawn_timer.stop()
 	round_timer.stop()
@@ -184,7 +195,6 @@ func _play_end_sequence() -> void:
 	end_overlay.show()
 	result_bar.hide()
 	timeout_banner.hide()
-
 
 	var effect_color_name: String
 
@@ -264,6 +274,19 @@ func _play_end_sequence() -> void:
 		return
 
 	await _animate_result_indicator()
+	
+	# Volver a la escena del nivel
+	if not is_inside_tree():
+		return
+
+	await get_tree().create_timer(1.0).timeout
+
+	if not is_inside_tree():
+		return
+
+	get_tree().change_scene_to_file(
+		"res://scenes/levels/nivel1_colegio.tscn"
+	)
 
 
 func _animate_result_indicator() -> void:

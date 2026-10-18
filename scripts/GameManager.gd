@@ -9,7 +9,7 @@ func resetar_variables() -> void:
 		GlobalManager.autoestima = 20
 		GlobalManager.tiempoRestante = 120
 		GlobalManager.escudosRecogidos = 0
-		GlobalManager.respuestaSeleccionada = null
+		GlobalManager.respuestaSeleccionada = ""
 		GlobalManager.motivoFinalMinijuego = ""
 		GlobalManager.colorResultadoMinijuego = "blue"
 		
