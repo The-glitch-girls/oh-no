@@ -1,6 +1,6 @@
 extends Node2D
 
-const SHIELD_SCENE: PackedScene = preload("res://scenes/components/Shield.tscn")
+const SHIELD_SCENE: PackedScene = preload("res://scenes/components/shield.tscn")
 const THOUGHT_SCENE: PackedScene = preload("res://scenes/components/IntrusiveThought.tscn")
 const PLAYER_EYES_CLOSED: Texture2D = preload(
 	"res://assets/sprites/personajeMiniGameojosCerrados.png"
