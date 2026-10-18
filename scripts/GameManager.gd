@@ -10,6 +10,8 @@ func resetar_variables() -> void:
 		GlobalManager.tiempoRestante = 120
 		GlobalManager.escudosRecogidos = 0
 		GlobalManager.respuestaSeleccionada = null
+		GlobalManager.motivoFinalMinijuego = ""
+		GlobalManager.colorResultadoMinijuego = "blue"
 		
 func load_json_file(path: String):
 	# 1. Check if the file exists
