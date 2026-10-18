@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://comrhpr07vomq"]
 
-[ext_resource type="Script" uid="uid://b15ikcwenwi7h" path="res://scripts/dialogue_box.gd" id="1_bs717"]
+[ext_resource type="Script" uid="uid://b15ikcwenwi7h" path="res://scripts/componentes/dialogue_box.gd" id="1_bs717"]
 
 [node name="DialogueBox" type="PanelContainer"]
 script = ExtResource("1_bs717")

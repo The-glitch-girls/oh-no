@@ -2,7 +2,7 @@ extends Node
 
 # Niveles y dialogo
 var etapaActual = 0;
-var personajeActual = 0;
+var enemigoActual = 0;
 
 # HUD
 var autoestima = 20;
