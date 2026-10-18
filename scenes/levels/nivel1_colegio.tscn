@@ -1,17 +1,28 @@
-[gd_scene load_steps=10 format=3 uid="uid://wpm5hcni5158"]
+[gd_scene load_steps=15 format=3 uid="uid://wpm5hcni5158"]
 
 [ext_resource type="Script" uid="uid://d38rribceg05o" path="res://scripts/levels/nivel_1_colegio.gd" id="1_6oakp"]
 [ext_resource type="Texture2D" uid="uid://3x10fm6nct7y" path="res://assets/sprites/background/bgEtapa1.png" id="1_mjf5d"]
 [ext_resource type="Texture2D" uid="uid://0kv83u0vhcmj" path="res://assets/sprites/enemigos/diego.png" id="2_5vrj8"]
 [ext_resource type="Texture2D" uid="uid://uwyog4x84e3b" path="res://assets/sprites/jugador/prota_respuesta_complaciente.png" id="2_t4yib"]
 [ext_resource type="Texture2D" uid="uid://5qldilijjyi4" path="res://assets/sprites/dialogo/mensaje.png" id="3_qddh7"]
-[ext_resource type="Texture2D" uid="uid://4k4xwo6pnisc" path="res://assets/sprites/dialogo/e1_l1_diego.png" id="4_si1gr"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="4_t4yib"]
+[ext_resource type="Texture2D" uid="uid://cd0j2aettlikv" path="res://assets/sprites/dialogo/enemigo_pill.png" id="7_rjahh"]
 [ext_resource type="Texture2D" uid="uid://qaodvqip1dxb" path="res://assets/sprites/dialogo/jugadora_complaciente.png" id="8_rjahh"]
+[ext_resource type="Texture2D" uid="uid://ch62bc83lfynt" path="res://assets/sprites/dialogo/flecha.png" id="9_aq5w1"]
+[ext_resource type="Texture2D" uid="uid://ce0xf6bjye0mx" path="res://assets/sprites/dialogo/pensamiento.png" id="9_rxak7"]
+[ext_resource type="Texture2D" uid="uid://cux6g2baf8umu" path="res://assets/sprites/botones/btnBg.png" id="11_rscja"]
 
 [sub_resource type="Theme" id="Theme_6oakp"]
 default_font = ExtResource("4_t4yib")
 default_font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_rjahh"]
+font = ExtResource("4_t4yib")
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_aq5w1"]
+default_font = ExtResource("4_t4yib")
 
 [node name="Etapa1" type="Node2D"]
 script = ExtResource("1_6oakp")
@@ -27,14 +38,15 @@ grow_vertical = 2
 texture = ExtResource("1_mjf5d")
 
 [node name="jugador" type="TextureRect" parent="."]
-visible = false
 offset_left = 373.375
+offset_top = 6.0
 offset_right = 2506.38
-offset_bottom = 2867.0
+offset_bottom = 2873.0
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_t4yib")
 
 [node name="enemigo" type="TextureRect" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -70,16 +82,21 @@ theme = SubResource("Theme_6oakp")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_constants/line_separation = 10
 theme_override_font_sizes/normal_font_size = 20
-text = "Oye, ¿Estas sola? ¡Pues estás de suerte!. Te invito a ver la película de terror 'Delfines Asesinos 8'. 
-No todos los días tienes la oportunidad de salir con alguien tan genial como yo. ¿Qué te parece?
-Te ayudará a ser popular. Ninguna chica rechaza mi encanto."
 
 [node name="enemigo_nombre" type="TextureRect" parent="."]
 offset_left = 290.0
 offset_top = 481.0
 offset_right = 464.0
 offset_bottom = 526.0
-texture = ExtResource("4_si1gr")
+texture = ExtResource("7_rjahh")
+
+[node name="en_label" type="Label" parent="enemigo_nombre"]
+layout_mode = 0
+offset_right = 174.0
+offset_bottom = 36.0
+label_settings = SubResource("LabelSettings_rjahh")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="jugador_nombre" type="TextureRect" parent="."]
 visible = false
@@ -88,3 +105,53 @@ offset_top = 481.0
 offset_right = 464.0
 offset_bottom = 526.0
 texture = ExtResource("8_rjahh")
+
+[node name="flecha_siguiente" type="TextureButton" parent="."]
+offset_left = 1019.0
+offset_top = 606.0
+offset_right = 1059.0
+offset_bottom = 630.0
+texture_normal = ExtResource("9_aq5w1")
+
+[node name="burbuja_pensamiento" type="TextureRect" parent="."]
+visible = false
+offset_left = 814.0
+offset_top = 89.0
+offset_right = 1093.0
+offset_bottom = 347.0
+texture = ExtResource("9_rxak7")
+
+[node name="txtPensamiento" type="Label" parent="burbuja_pensamiento"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 36.0
+offset_right = 234.0
+offset_bottom = 169.0
+theme = SubResource("Theme_aq5w1")
+theme_override_colors/font_color = Color(0.0313726, 0.4, 0.568627, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="btnMinijuego" type="TextureButton" parent="."]
+visible = false
+offset_left = 1046.0
+offset_top = 596.0
+offset_right = 1224.0
+offset_bottom = 685.0
+texture_normal = ExtResource("11_rscja")
+
+[node name="Label" type="Label" parent="btnMinijuego"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Jugar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="btnMinijuego" to="." method="_on_btn_minijuego_pressed"]

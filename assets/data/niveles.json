@@ -11,7 +11,10 @@
 		{
 		  "id": "enemigo_01",
 		  "name": "Diego",
-		  "request": ["Oye, ¿Estas sola? ¡Pues estás de suerte!. Te invito a ver la película de terror 'Delfines Asesinos 8'. No todos los días tienes la oportunidad de salir con alguien tan genial como yo. ¿Qué te parece? Te ayudará a ser popular. Ninguna chica rechaza mi encanto"],
+		  "request": [
+			"Oye, ¿estás sola? ¡Pues estás de suerte! Te invito a ver la película de terror \"Delfines Asesinos 8\". No todos los días tienes la oportunidad de salir con alguien tan genial como yo. ¿Qué te parece?",
+			"Te ayudará a ser popular. Ninguna chica rechaza mi encanto."
+		  ],
 		  "automatic_thought": "Odio las películas de terror",
 		  "automatic_response": "Ehhh...",
 		  "minigame": {
@@ -23,7 +26,7 @@
 				"text": [
 					"Delfines asesinos 8… Wow.. Me encanta esa saga…"
 				],
-				"thought": "¿OCHO PELÍCULAS? ¡¿OCHO?! ¿Cuántas veces más pueden matar a la gente unos delfines? Odio las películas de terror.",
+				"thought": "¿Cuántas veces más pueden matar a la gente unos delfines?",
 				"min_shields": 0,
 				"self_esteem_change": -5,
 				"result": "accepted"
@@ -31,9 +34,10 @@
 			  {
 				"id": "negotiate",
 				"text": [
-					"Ah… bueno, supongo que podríamos ir al cine… pero no me gustan las películas de terror. ¿No podemos ver otra cosa? Hay una peli nueva que parece divertida…"
+				  "Ah… bueno, supongo que podríamos ir al cine… pero no me gustan las películas de terror.",
+				  "¿No podemos ver otra cosa? Hay una peli nueva que parece divertida…"
 				],
-				"thought": "Al final terminé aceptando la salida, por lo menos no tendré que ver 2 horas de delfines asesinos.",
+				"thought": "Al menos no tendré que ver 2 horas de delfines asesinos…",
 				"min_shields": 6,
 				"self_esteem_change": 3,
 				"result": "negotiated"
@@ -41,9 +45,10 @@
 			  {
 				"id": "refuse",
 				"text": [
-					"No, gracias. Las películas de terror no son lo mío y si siete películas no lograron convencerme, no creo que la octava haga milagros. Además, no me interesa salir contigo, pero agradezco la invitación."
+				  "No, gracias. Las películas de terror no son lo mío y si siete películas no lograron convencerme, no creo que la octava haga milagros.",
+				  "Además, no me interesa salir contigo, pero agradezco la invitación."
 				],
-				"thought": "No tengo por qué aceptar una salida que no quiero solo para no herir su ego. ¡Ojalá esos delfines tengan más suerte que él!",
+				"thought": "No tengo por qué aceptar una salida para no herir tu ego.",
 				"min_shields": 10,
 				"self_esteem_change": 5,
 				"result": "refused"
@@ -54,54 +59,58 @@
 			"accept": {
 			  "time_cost": 10,
 			  "enemy_reaction": [
-					"Sabía que dirías que sí. No cualquiera tiene la suerte de que yo la invite al cine. Te va a encantar la película; son 2 horas de pura magia. Ya verás."
-				]
+				"Sabía que dirías que sí. No cualquiera tiene la suerte de que yo la invite al cine.",
+				"Te va a encantar la película; son dos horas de pura magia. Ya verás."
+			  ]
 			},
 			"negotiate": {
 			  "time_cost": 4,
 			  "enemy_reaction": [
-					"Bueno… Pero te advierto que te estás perdiendo una obra maestra del terror cetáceo. Está bien. Paso por ti a las siete, no pienso volver a cambiar mis planes a última hora.",
-					"¡Vamos, que no todos los días te invito a salir!"
-				]
+				"Bueno… Pero te advierto que te estás perdiendo una obra maestra del terror cetáceo.",
+				"Está bien. Paso por ti a las siete, no pienso volver a cambiar mis planes a última hora.",
+				"¡Vamos, que no todos los días te invito a salir!"
+			  ]
 			},
 			"refuse": {
 			  "time_cost": 0,
 			  "enemy_reaction": [
-					"¿¡Cómo que no te interesa salir conmigo!? Soy el chico más popular de la escuela. ¿Me estás rechazando a mí? ¿Cómo que no te gusta la saga de Delfines asesinos?",
-					"¡Es la mejor saga de todas! Ja, está bien, hazte la difícil. Ya cambiarás de opinión cuando te des cuenta de lo que te pierdes."
-				]
+				"¿¡Cómo que no te interesa salir conmigo!? Soy el chico más popular de la escuela.",
+				"¿Me estás rechazando a mí? ¿Cómo que no te gusta la saga de Delfines asesinos?",
+				"¡Es la mejor saga de todas! Ja, está bien, hazte la difícil. Ya cambiarás de opinión cuando te des cuenta de lo que te pierdes."
+			  ]
 			}
 		  }
 		},
 		{
 			"id": "enemigo_02",
 			 "name": "Diego",
-			 "request": [
-				"¡Oye! Tengo algo importante que hacer hoy y no podré avanzar mi parte del trabajo... Sé buena chica y haz mi parte. Tú eres chancona, por eso somos compas, para ti será facilísimo.",
-				"No me vas a dejar en el aire ¿verdad? ¡Vale el 80 % de la nota! Si jalamos, será tu culpa … ¡No podemos fallar!"
+			  "request": [
+				"¡Oye! Tengo algo importante que hacer hoy y no podré avanzar mi parte del trabajo... Sé buena chica y haz mi parte.",
+				"Tú eres chancona, por eso somos compas, para ti será facilísimo. No me vas a dejar en el aire ¿verdad?",
+				"¡Vale el 80 % de la nota! Si jalamos, será tu culpa … ¡No podemos fallar!"
 			  ],
-		  "automatic_thought": "¿Otra vez? ¡Este es el trabajo de fin de curso! ¡Tuvimos 3 meses!",
-		  "automatic_response": "Esto…",
-		  "minigame": {
-			"duration_seconds": 8,
-			"max_shields": 5,
-			"responses": [
-			  {
-				"id": "accept",
-				"text": [
-					"Claro… no hay problema… Yo te cubro, por eso somos amigos.. ¿Cierto? Tu harías lo mismo… ve a lo que tengas que hacer"
-				],
-				"thought": "Siempre encuentra alguna excusa para dejarme el trabajo y se va de fiesta. ¡A este paso, voy a terminar graduándome por ambos!",
-				"min_shields": 0,
-				"self_esteem_change": -5,
-				"result": "accepted"
-			  },
+			  "automatic_thought": "¿Otra vez? ¡Este es el trabajo de fin de curso! ¡Tuvimos 3 meses!",
+		  	  "automatic_response": "Esto…",
+			  "minigame": {
+				"duration_seconds": 8,
+				"max_shields": 5,
+				"responses": [
+					  {
+						"id": "accept",
+						"text": [
+						  "Claro… no hay problema… Yo te cubro, por eso somos amigos… ¿Cierto? \nTú harías lo mismo… Ve a lo que tengas que hacer."
+						],
+						"thought": "¡A este paso, voy a terminar graduándome por ambos!",
+						"min_shields": 0,
+						"self_esteem_change": -5,
+						"result": "accepted"
+					  },
 			  {
 				"id": "negotiate",
 				"text": [
-					"Está bien, te ayudaré … pero pásame todas las fotos que reuniste para el informe."
+				  "Está bien, te ayudaré… pero pásame todas las fotos que reuniste para el informe."
 				],
-				"thought": "Al menos que me pase sus fotos para terminar más rápido. Bastante ya tengo con hacerlo todo yo",
+				"thought": "Eso servirá para terminar más rápido. Bastante ya tengo con hacerlo todo yo.",
 				"min_shields": 6,
 				"self_esteem_change": 3,
 				"result": "negotiated"
@@ -109,10 +118,10 @@
 			  {
 				"id": "refuse",
 				"text": [
-					"No. Siempre haces lo mismo, dejas todo a última hora y de seguro es para irte de fiesta. ¡Tuviste tres meses!.",
-					"Pásame tu parte o entregaré todo a mi nombre. Y si jalas, problema tuyo, no mío. "
+				  "No. Siempre haces lo mismo, dejas todo a última hora y de seguro es para irte de fiesta. ¡Tuviste tres meses!",
+				  "Pásame tu parte o entregaré todo a mi nombre. Y si jalas, problema tuyo, no mío."
 				],
-				"thought": "No voy a sacrificar mi nota por alguien que siempre está poniendo excusas...",
+				"thought": "No voy a sacrificar mi nota por alguien que siempre está poniendo excusas.",
 				"min_shields": 10,
 				"self_esteem_change": 5,
 				"result": "refused"
@@ -123,33 +132,35 @@
 			"accept": {
 			  "time_cost": 10,
 			  "enemy_reaction": [
-					"¡Sabía que podía contar contigo! Por eso hacer grupos contigo es lo mejor, siempre estás para salvarme. Bueno, te dejo. ¡Ah, y no te olvides de mandarme el informe cuando termines!"
-				]
+				"¡Sabía que podía contar contigo! Por eso hacer grupos contigo es lo mejor, siempre estás para salvarme.",
+				"Bueno, te dejo. ¡Ah, y no te olvides de mandarme el informe cuando termines!"
+			  ]
 			},
 			"negotiate": {
 			  "time_cost": 4,
 			  "enemy_reaction": [
-					"Ay, sí, claro… te las paso cuando vuelva a casa de mi fies… te las paso, te las paso. Aunque no creo que estén todas, ¿no te importa, verdad?",
-					"Con eso puedes ir avanzando. Sabía que podía contar contigo."
-				]
+				"Ay, sí, claro… te las paso cuando vuelva a casa de mi fies… te las paso, te las paso. Aunque no creo que estén todas, ¿no te importa, verdad?",
+				"Con eso puedes ir avanzando. Sabía que podía contar contigo."
+			  ]
 			},
 			"refuse": {
 			  "time_cost": 0,
 			  "enemy_reaction": [
-					"¿En serio? Pensé que eras de fiar… ¿Cómo crees que voy a hacer tres meses de trabajo en una noche?",
-					"¡Voy a tener que cambiar mis planes! Pero bueno, tranquila, ya entendí que no puedo contar contigo."
-				]
+				"¿En serio? Pensé que eras de fiar… ¿Cómo crees que voy a hacer tres meses de trabajo en una noche?",
+				"¡Voy a tener que cambiar mis planes! Pero bueno, tranquila, ya entendí que no puedo contar contigo."
+			  ]
 			}
 		  }
 		},
 		{
 			"id": "enemigo_03",
 			 "name": "Diego",
-			 "request": [
-				"Veriitooo, este fin de semana son las olimpiadas escolares y te puse como mi reemplazo, porque mis papás me llevarán a Magic Land. Tú no tienes nada que hacer, asi que puedes cubrirme, ¿Verdad?",
+			  "request": [
+				"Veriitooo, este fin de semana son las olimpiadas escolares y te puse como mi reemplazo, porque mis papás me llevarán a Magic Land.",
+				"Tú no tienes nada que hacer, así que puedes cubrirme, ¿verdad?"
 			  ],
-		  "automatic_thought": "Llevo 1 año esperando el concierto de VHS este fin de semana… ¿Quién le dijo que podía decidir mi tiempo libre?",
-		  "automatic_response": "Esto…",
+			  "automatic_thought": "Llevo 1 año esperando el concierto de VHS este fin de semana…",
+			  "automatic_response": "Esto…",
 		  "minigame": {
 			"duration_seconds": 8,
 			"max_shields": 5,
@@ -157,9 +168,9 @@
 			  {
 				"id": "accept",
 				"text": [
-					"Claro… no hay problema… Yo te cubro, por eso somos amigos.. ¿Cierto? Tu harías lo mismo… ve a lo que tengas que hacer"
+					"Está bien… yo iré a las olimpiadas, es importante el tiempo en familia"
 				],
-				"thought": "Siempre encuentra alguna excusa para dejarme el trabajo y se va de fiesta. ¡A este paso, voy a terminar graduándome por ambos!",
+				"thought": "Ahora tengo que ver como revender mi entrada, mis amigas me van a matar.",
 				"min_shields": 0,
 				"self_esteem_change": -5,
 				"result": "accepted"
@@ -167,9 +178,9 @@
 			  {
 				"id": "negotiate",
 				"text": [
-					"Está bien, te ayudaré … pero pásame todas las fotos que reuniste para el informe."
+					"Wow… ir a Magic Land… Puedo cubrirte por unas horas pero luego debo salir a un evento importante para mi… Así ganamos los dos."
 				],
-				"thought": "Al menos que me pase sus fotos para terminar más rápido. Bastante ya tengo con hacerlo todo yo",
+				"thought": "Supongo que me perderé el intercambio de freebies, pero en fin",
 				"min_shields": 6,
 				"self_esteem_change": 3,
 				"result": "negotiated"
@@ -177,10 +188,10 @@
 			  {
 				"id": "refuse",
 				"text": [
-					"No. Siempre haces lo mismo, dejas todo a última hora y de seguro es para irte de fiesta. ¡Tuviste tres meses!.",
-					"Pásame tu parte o entregaré todo a mi nombre. Y si jalas, problema tuyo, no mío. "
+					"No, yo no te voy a reemplazar. Ahorita mismo habló con los profes. Ya tengo planes y no me voy a acomodar a los tuyos.",
+					"Y mi nombre es VE RO NI CA , no 'Verito'"
 				],
-				"thought": "No voy a sacrificar mi nota por alguien que siempre está poniendo excusas...",
+				"thought": "Ni loca cambio mi concierto, su Magic Land será un NO NO Land",
 				"min_shields": 10,
 				"self_esteem_change": 5,
 				"result": "refused"
@@ -191,21 +202,20 @@
 			"accept": {
 			  "time_cost": 10,
 			  "enemy_reaction": [
-					"¡Sabía que podía contar contigo! Por eso hacer grupos contigo es lo mejor, siempre estás para salvarme. Bueno, te dejo. ¡Ah, y no te olvides de mandarme el informe cuando termines!"
+					"¡Sabía que podía contar contigo, Verito! Esto es apoyo entre amigos. ¡Genial! ¡Fin de semana en Magic Land! Bueno, voy a avisar a mis papás que no hay problema alguno. ¡Nos vemos a la vuelta!"
 				]
 			},
 			"negotiate": {
 			  "time_cost": 4,
 			  "enemy_reaction": [
-					"Ay, sí, claro… te las paso cuando vuelva a casa de mi fies… te las paso, te las paso. Aunque no creo que estén todas, ¿no te importa, verdad?",
-					"Con eso puedes ir avanzando. Sabía que podía contar contigo."
+					"Supongo que sí, mientras nos consideren asistencia es mejor que nada… \n¡Gracias, Verito! Sabía que podíamos llegar a un acuerdo."
 				]
 			},
 			"refuse": {
 			  "time_cost": 0,
 			  "enemy_reaction": [
-					"¿En serio? Pensé que eras de fiar… ¿Cómo crees que voy a hacer tres meses de trabajo en una noche?",
-					"¡Voy a tener que cambiar mis planes! Pero bueno, tranquila, ya entendí que no puedo contar contigo."
+					"Osea uno intenta hacer las cosas por las buenas y mira lo que pasa. Es más fácil arruinar los momentos familiares de los demás, ¿no?",
+					"No te preocupes Verónica, veo que de ti no hay apoyo."
 				]
 			}
 		  }

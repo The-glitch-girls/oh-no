@@ -99,11 +99,9 @@ texture_normal = ExtResource("5_a814b")
 
 [node name="Label" type="Label" parent="btnJugar"]
 visible = false
-layout_mode = 0
-offset_left = 32.0
-offset_top = -146.0
-offset_right = 356.0
-offset_bottom = -77.0
+layout_mode = 1
+offset_right = 183.0
+offset_bottom = 69.0
 text = "Jugar"
 horizontal_alignment = 1
 vertical_alignment = 1
