@@ -21,21 +21,30 @@ var solicitud_arr_actual: Array = []
 var indice_solicitud: int = 0
 var escribiendo: bool = false
 
+# Resultado del minijuego
+var respuesta_textos: Array = []
+var reacciones_enemigo: Array = []
+
+# Control del diálogo posterior al minijuego
+var tipo_dialogo: String = "solicitud"
+var indice_dialogo: int = 0
+
 func _ready() -> void:
-	# Setear variables
-	GlobalManager.etapaActual = 1
-	GlobalManager.enemigoActual = 0
 	flecha_siguiente.hide()
 	flecha_siguiente.pressed.connect(_al_presionar_flecha)
 	jugador_sprite.hide()
 	jugador_nombre.hide()
 	burbuja_pensamiento.hide()
 	
-	# Cargar datos de json
+	# Cargar el JSON antes de procesar el resultado.
 	var data = GameManager.load_json_file(FILE_PATH)
-	
 	if data and data.has("stages"):
 		print("Successfully loaded JSON data")
+
+		# Guardar el JSON completo para consultarlo desde GlobalManager.
+		GlobalManager.datosJuego = data
+
+		# Obtener la etapa escuela.
 		nivel_data = data["stages"].filter(
 			func(level):
 				return level["id"] == "escuela"
@@ -46,16 +55,36 @@ func _ready() -> void:
 			return
 
 		nivel_enemigos = nivel_data[0]["characters"]
-
+		
 		if nivel_enemigos.is_empty():
 			push_error("La etapa no tiene personajes")
 			return
 
+		# Si regresamos del minijuego, procesar el resultado.
+		if GlobalManager.minijuegoCompletado:
+			GlobalManager.etapaActualId = "escuela"
+
+			enemigo_actual = nivel_enemigos[
+				GlobalManager.enemigoActual
+			]
+
+			procesar_resultado_minijuego()
+			return
+
+		# Si es una partida nueva, mostrar al primer enemigo.
+		GlobalManager.etapaActual = 1
+		GlobalManager.enemigoActual = 0
+		GlobalManager.etapaActualId = "escuela"
+		GlobalManager.personajeActualId = "enemigo_01"
+
 		enemigo_actual = nivel_enemigos[
 			GlobalManager.enemigoActual
 		]
-		
+
 		_actualizar_enemigo()
+	else:
+		push_error("No se pudo cargar niveles.json")
+
 		
 		
 func _siguiente_enemigo() -> void:
@@ -113,13 +142,39 @@ func _mostrar_solicitud() -> void:
 func _al_presionar_flecha() -> void:
 	if escribiendo:
 		return
+		
+	match tipo_dialogo:
+		"solicitud":
+			if indice_solicitud < solicitud_arr_actual.size() - 1:
+				indice_solicitud += 1
+				_mostrar_solicitud()
+		"respuesta":
+			if indice_dialogo < respuesta_textos.size() - 1:
+				indice_dialogo += 1
 
-	if indice_solicitud < solicitud_arr_actual.size() - 1:
-		indice_solicitud += 1
-		_mostrar_solicitud()
+				await _escribir_texto_rich(
+					txtMensaje,
+					str(respuesta_textos[indice_dialogo])
+				)
 
+				if indice_dialogo < respuesta_textos.size() - 1:
+					flecha_siguiente.show()
+				else:
+					await get_tree().create_timer(1.0).timeout
+					_mostrar_reaccion_enemigo()
+		"reaccion":
+			if indice_dialogo < reacciones_enemigo.size() - 1:
+				indice_dialogo += 1
+				await _escribir_texto_rich(
+					txtMensaje,
+					str(reacciones_enemigo[indice_dialogo])
+				)
+				if indice_dialogo < reacciones_enemigo.size() - 1:
+					flecha_siguiente.show()
+				else:
+					flecha_siguiente.hide()
 
-func _mostrar_jugador() -> void:
+func _mostrar_jugador(pensamiento: String = "", respuesta_inicial: String = "") -> void:
 	flecha_siguiente.hide()
 	txtMensaje.text = ""
 	txtPensamiento.text = ""
@@ -133,10 +188,18 @@ func _mostrar_jugador() -> void:
 	jugador_nombre.show()
 	burbuja_pensamiento.show()
 
-	await _escribir_texto(
-		txtPensamiento,
-		str(enemigo_actual.get("automatic_thought", ""))
-	)
+	# Si no se reciben textos nuevos, se utilizan los del JSON inicial.
+	if pensamiento.is_empty():
+		pensamiento = str(
+			enemigo_actual.get("automatic_thought", "")
+		)
+	
+	if respuesta_inicial.is_empty():
+		respuesta_inicial = str(
+			enemigo_actual.get("automatic_response", "")
+		)
+		
+	await _escribir_texto(txtPensamiento, pensamiento)
 	
 	# Esperar un segundo.
 	await get_tree().create_timer(1.0).timeout
@@ -145,10 +208,10 @@ func _mostrar_jugador() -> void:
 	txtMensaje.show()
 	txtMensaje.text = ""
 	txtMensaje.visible_characters = -1
-
+	
 	await _escribir_texto_rich(
 		txtMensaje,
-		str(enemigo_actual.get("automatic_response", ""))
+		respuesta_inicial
 	)
 	
 	# Esperar un segundo.
@@ -185,6 +248,137 @@ func _escribir_texto_rich(label: RichTextLabel, mensaje: String) -> void:
 	label.visible_characters = -1
 	escribiendo = false
 
+func procesar_resultado_minijuego() -> void:
+	if not GlobalManager.minijuegoCompletado:
+		return
 
+	# Consumir el estado para no procesarlo dos veces.
+	GlobalManager.minijuegoCompletado = false
+	
+	var respuesta: Dictionary = (
+		GlobalManager.obtener_respuesta_actual()
+	)
+
+	var consecuencias: Dictionary = (
+		GlobalManager.obtener_consecuencias_actuales()
+	)
+	
+	if respuesta.is_empty():
+		push_error("No se encontró la respuesta narrativa")
+		return
+
+	if consecuencias.is_empty():
+		push_error("No se encontraron las consecuencias")
+		return
+	
+	# Pensamiento interno de la protagonista.
+	var pensamiento: String = respuesta.get("thought", "")
+
+	# Respuestas narrativas de la protagonista.
+	var textos: Array = respuesta.get("text", [])
+		
+	# Reacción del enemigo.
+	var reacciones: Array = consecuencias.get(
+		"enemy_reaction", []
+	)
+
+	# Aplicar consecuencias.
+	var cambio_autoestima: int = respuesta.get(
+		"self_esteem_change", 0
+	)
+
+	var costo_tiempo: int = consecuencias.get(
+		"time_cost", 0
+	)
+
+	GlobalManager.autoestima += cambio_autoestima
+	GlobalManager.tiempoRestante -= costo_tiempo
+	
+	respuesta_textos = textos
+	reacciones_enemigo = reacciones
+
+	await _mostrar_respuesta_minijuego()
+	
+func _mostrar_respuesta_minijuego() -> void:
+	flecha_siguiente.hide()
+	btnMinijuego.hide()
+
+	tipo_dialogo = "respuesta"
+	indice_dialogo = 0
+
+	jugador_sprite.show()
+	jugador_nombre.show()
+	burbuja_pensamiento.show()
+
+	enemigo_sprite.hide()
+	enemigo_label.hide()
+
+	txtPensamiento.text = ""
+
+	var respuesta: Dictionary = (
+		GlobalManager.obtener_respuesta_actual()
+	)
+
+	await _escribir_texto(
+		txtPensamiento,
+		str(respuesta.get("thought", ""))
+	)
+
+	await get_tree().create_timer(1.0).timeout
+
+	respuesta_textos = respuesta.get("text", [])
+
+	if respuesta_textos.is_empty():
+		_mostrar_reaccion_enemigo()
+		return
+
+	await _escribir_texto_rich(
+		txtMensaje,
+		str(respuesta_textos[0])
+	)
+
+	if respuesta_textos.size() > 1:
+		flecha_siguiente.show()
+	else:
+		await get_tree().create_timer(1.0).timeout
+		_mostrar_reaccion_enemigo()
+
+func _mostrar_reaccion_enemigo() -> void:
+	flecha_siguiente.hide()
+
+	tipo_dialogo = "reaccion"
+	indice_dialogo = 0
+
+	jugador_sprite.hide()
+	jugador_nombre.hide()
+	burbuja_pensamiento.hide()
+
+	enemigo_sprite.show()
+	enemigo_label.show()
+	enemigo_label.text = str(
+		enemigo_actual.get("name", "")
+	)
+
+	var consecuencias: Dictionary = (
+		GlobalManager.obtener_consecuencias_actuales()
+	)
+
+	reacciones_enemigo = consecuencias.get(
+		"enemy_reaction", []
+	)
+
+	if reacciones_enemigo.is_empty():
+		return
+
+	await _escribir_texto_rich(
+		txtMensaje,
+		str(reacciones_enemigo[0])
+	)
+
+	if reacciones_enemigo.size() > 1:
+		flecha_siguiente.show()
+	else:
+		flecha_siguiente.hide()
+		
 func _on_btn_minijuego_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/MiniGame.tscn")

@@ -1,5 +1,6 @@
 extends Node
 
+# Minijuego
 const MINIJUEGO_CONFIG: Dictionary = {
 	1: {
 		"duration": 20.0,
@@ -39,6 +40,7 @@ const META_ESCUDOS: int = 15
 var nivelMinijuegoActual: int = 1
 
 # Niveles y dialogo
+var datosJuego: Dictionary = {}
 var etapaActual = 0;
 var enemigoActual = 0;
 
@@ -48,11 +50,21 @@ var tiempoRestante = 120;
 
 # Minijuego
 var escudosRecogidos = 0;
-var respuestaSeleccionada = null;
+
 var motivoFinalMinijuego = "";
 var colorResultadoMinijuego = "blue";
 var pensamientosAtrapados = 0;
 
+# Progreso narrativo
+var etapaActualId: String = "escuela"
+var personajeActualId: String = "enemigo_01"
+
+# Resultado del minijuego
+var respuestaSeleccionada: String = ""
+var minijuegoCompletado: bool = false
+
+# Datos cargados desde el JSON
+var nivel_data: Dictionary = {}
 
 func obtener_config_minijuego() -> Dictionary:
 	if not MINIJUEGO_CONFIG.has(nivelMinijuegoActual):
@@ -67,3 +79,55 @@ func color_para_escudos(cantidad: float) -> String:
 	if cantidad <= ESCUDOS_POR_COLOR["purple"]:
 		return "purple"
 	return "pink"
+	
+func respuesta_por_color(color: String) -> String:
+	match color:
+		"blue":
+			return "accept"
+		"pink":
+			return "refuse"
+		"purple":
+			return "negotiate"
+		_:
+			return ""
+			
+# Dialogo interactivo
+func obtener_personaje_actual() -> Dictionary:
+	var etapas: Array = datosJuego.get("stages", [])
+	
+	for etapa in etapas:
+		if etapa.get("id", "") != etapaActualId:
+			continue
+
+		var personajes: Array = etapa.get("characters", [])
+
+		for personaje in personajes:
+			if personaje.get("id", "") == personajeActualId:
+				return personaje
+				
+	push_warning(
+		"No se encontró el personaje: "
+		+ personajeActualId
+		+ " en la etapa "
+		+ etapaActualId
+	)
+
+	return {}
+	
+func obtener_respuesta_actual() -> Dictionary:
+	var personaje := obtener_personaje_actual()
+	var minijuego: Dictionary = personaje.get("minigame", {})
+
+	for respuesta in minijuego.get("responses", []):
+		if respuesta.get("id", "") == respuestaSeleccionada:
+			return respuesta
+
+	return {}
+
+func obtener_consecuencias_actuales() -> Dictionary:
+	var personaje := obtener_personaje_actual()
+	var consecuencias: Dictionary = personaje.get(
+		"consequences", {}
+	)
+
+	return consecuencias.get(respuestaSeleccionada, {})
