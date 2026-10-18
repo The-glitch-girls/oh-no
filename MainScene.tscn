@@ -179,6 +179,7 @@ texture = ExtResource("8_p5x2j")
 
 [node name="decoCara" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 876.0
 offset_top = 249.0
 offset_right = 1040.0

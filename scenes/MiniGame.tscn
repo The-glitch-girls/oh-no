@@ -1,15 +1,20 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=18 format=3 uid="uid://bw80cwacc1wpj"]
 
 [ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
 [ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
-[ext_resource type="Texture2D" uid="uid://o1fv8kmfwuls" path="res://assets/sprites/background/levelBackground.png" id="2_1te6h"]
+[ext_resource type="Texture2D" uid="uid://n7ae1evbc5f" path="res://assets/sprites/background/miniGameBackground.png" id="2_rqxjr"]
 [ext_resource type="Texture2D" uid="uid://c6lb5gj1hn45a" path="res://assets/sprites/pixel_final.png" id="4_rqxjr"]
 [ext_resource type="Texture2D" uid="uid://b18peh66jif24" path="res://assets/sprites/timeOver.png" id="5_80kqo"]
 [ext_resource type="Texture2D" uid="uid://b1lw5nks4tyk" path="res://assets/sprites/hora.png" id="5_rqxjr"]
-[ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_r7xng"]
+[ext_resource type="FontFile" uid="uid://q5no36gwvjng" path="res://assets/fonts/Pix32.ttf" id="6_itx4y"]
 [ext_resource type="Texture2D" uid="uid://o780liwp3qr6" path="res://assets/sprites/barra_decisiones.png" id="8_0amjk"]
+[ext_resource type="FontFile" uid="uid://c83kr3tb15auo" path="res://assets/fonts/Gabarito-VariableFont_wght.ttf" id="8_3r8ep"]
 [ext_resource type="Texture2D" uid="uid://cy8m2ur7q4pd8" path="res://assets/sprites/indicador.png" id="9_itx4y"]
 [ext_resource type="AudioStream" uid="uid://b4pa7p0d1cjb" path="res://assets/sounds/minijuego.ogg" id="10_0amjk"]
+[ext_resource type="Texture2D" uid="uid://c1x3r37vbdy2y" path="res://assets/sprites/instrucciones.png" id="11_qoybj"]
+[ext_resource type="AudioStream" uid="uid://da2ouniciug6o" path="res://assets/sounds/sfx/incorrect.mp3" id="12_aawig"]
+[ext_resource type="AudioStream" uid="uid://htwuqn5ypbum" path="res://assets/sounds/sfx/correct.mp3" id="13_qoybj"]
+[ext_resource type="AudioStream" uid="uid://d1xiy5uxwbp0m" path="res://assets/sounds/sfx/game_over.mp3" id="14_3opo0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(58, 73)
@@ -24,7 +29,7 @@ metadata/_edit_horizontal_guides_ = [-143.0]
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = ExtResource("2_1te6h")
+texture = ExtResource("2_rqxjr")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(602, 626)
@@ -61,11 +66,12 @@ texture = ExtResource("5_rqxjr")
 
 [node name="TimeLabel" type="Label" parent="HUD/TimeContainer"]
 layout_mode = 0
-offset_left = 44.0
-offset_right = 154.0
+offset_left = 57.0
+offset_top = -3.0
+offset_right = 169.0
 offset_bottom = 66.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_r7xng")
+theme_override_fonts/font = ExtResource("6_itx4y")
 theme_override_font_sizes/font_size = 40
 text = "00:20"
 horizontal_alignment = 1
@@ -108,12 +114,14 @@ texture = ExtResource("5_80kqo")
 
 [node name="TimeOutLabel" type="Label" parent="HUD/EndOverlay/TimeOutBanner"]
 layout_mode = 0
-offset_right = 1014.0
-offset_bottom = 240.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_r7xng")
-theme_override_font_sizes/font_size = 90
-text = "¡ Se acabó el tiempo !"
+offset_left = 111.0
+offset_top = 125.0
+offset_right = 913.0
+offset_bottom = 217.0
+theme_override_colors/font_color = Color(0.705882, 0.827451, 0.941176, 1)
+theme_override_fonts/font = ExtResource("8_3r8ep")
+theme_override_font_sizes/font_size = 50
+text = "SE ACABÓ EL TIEMPO "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -126,20 +134,52 @@ offset_bottom = 40.0
 
 [node name="BarBackground" type="TextureRect" parent="HUD/ResultBar"]
 layout_mode = 0
-offset_left = 1074.0
-offset_top = 64.0
-offset_right = 1151.0
-offset_bottom = 624.0
+offset_left = 928.0
+offset_top = 125.0
+offset_right = 1005.0
+offset_bottom = 685.0
 texture = ExtResource("8_0amjk")
 
 [node name="BarIndicator" type="TextureRect" parent="HUD/ResultBar"]
 layout_mode = 0
-offset_left = 1076.0
-offset_top = 315.0
-offset_right = 1208.0
-offset_bottom = 363.0
+offset_left = 982.0
+offset_top = 375.0
+offset_right = 1027.0
+offset_bottom = 434.0
 texture = ExtResource("9_itx4y")
+
+[node name="Instrucciones" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Instrucciones"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 194.0
+offset_right = 1075.0
+offset_bottom = 516.0
+texture = ExtResource("11_qoybj")
 
 [node name="AudioMinijuego" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_0amjk")
 parameters/looping = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WrongSound" type="AudioStreamPlayer" parent="Control"]
+stream = ExtResource("12_aawig")
+volume_db = 12.0
+
+[node name="RightSound" type="AudioStreamPlayer" parent="Control"]
+stream = ExtResource("13_qoybj")
+
+[node name="TimeOverSound" type="AudioStreamPlayer" parent="Control"]
+stream = ExtResource("14_3opo0")
+volume_db = 12.0
