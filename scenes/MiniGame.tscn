@@ -18,6 +18,7 @@ blend_mode = 3
 
 [node name="MiniGame" type="Node2D"]
 script = ExtResource("1_y5gxj")
+metadata/_edit_horizontal_guides_ = [-143.0]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1280.0
