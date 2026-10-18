@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch62bc83lfynt"
-path="res://.godot/imported/Vector 12.png-1009b00a6050ab92ee36801f25ebe468.ctex"
+uid="uid://b7cxufimti7sm"
+path="res://.godot/imported/prota_respuesta_complaciente_a_medias_at.png-a49a7f80ce9e5338f6a0b85ae547934c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Vector 12.png"
-dest_files=["res://.godot/imported/Vector 12.png-1009b00a6050ab92ee36801f25ebe468.ctex"]
+source_file="res://assets/sprites/jugador/prota_respuesta_complaciente_a_medias_at.png"
+dest_files=["res://.godot/imported/prota_respuesta_complaciente_a_medias_at.png-a49a7f80ce9e5338f6a0b85ae547934c.ctex"]
 
 [params]
 
