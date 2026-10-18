@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cy8m2ur7q4pd8" path="res://assets/sprites/indicador.png" id="9_itx4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
-size = Vector2(132.5, 184)
+size = Vector2(58, 73)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_multiply"]
 blend_mode = 3
@@ -34,9 +34,8 @@ texture = ExtResource("2_y5gxj")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(1.75, 10)
+position = Vector2(1, -1.5)
 shape = SubResource("RectangleShape2D_1te6h")
-metadata/_edit_lock_ = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
 

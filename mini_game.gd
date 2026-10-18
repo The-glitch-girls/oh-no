@@ -183,6 +183,9 @@ func _finish_round(reason: String) -> void:
 
 	round_finished = true
 	finish_reason = reason
+	GlobalManager.escudosRecogidos = shields_caught
+	GlobalManager.motivoFinalMinijuego = finish_reason
+	GlobalManager.colorResultadoMinijuego = get_result_color()
 
 	spawn_timer.stop()
 	round_timer.stop()
@@ -342,4 +345,25 @@ func _animate_result_indicator() -> void:
 		"position:y",
 		indicator_target_y,
 		0.65
+	)
+	await indicator_tween.finished
+
+	# El color final corresponde a la zona donde termina el indicador.
+	var final_color: Color = RESULT_COLORS[get_result_color()]
+	multiply_rect.color = final_color
+	tint_rect.color = final_color
+	multiply_rect.modulate.a = 0.0
+	tint_rect.modulate.a = 0.0
+	var final_color_tween: Tween = create_tween()
+	final_color_tween.tween_property(
+		multiply_rect,
+		"modulate:a",
+		1.0,
+		0.4
+	)
+	final_color_tween.parallel().tween_property(
+		tint_rect,
+		"modulate:a",
+		0.5,
+		0.4
 	)
