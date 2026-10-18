@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=21 format=3 uid="uid://bw80cwacc1wpj"]
 
 [ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
 [ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
@@ -15,6 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://da2ouniciug6o" path="res://assets/sounds/sfx/incorrect.mp3" id="12_aawig"]
 [ext_resource type="AudioStream" uid="uid://htwuqn5ypbum" path="res://assets/sounds/sfx/correct.mp3" id="13_qoybj"]
 [ext_resource type="AudioStream" uid="uid://d1xiy5uxwbp0m" path="res://assets/sounds/sfx/game_over.mp3" id="14_3opo0"]
+[ext_resource type="AudioStream" uid="uid://cvwtddef8bt6q" path="res://assets/sounds/sfx/spin.mp3" id="15_spin"]
+[ext_resource type="Shader" uid="uid://vpd2a4w2fk0d" path="res://shaders/iris_transition.gdshader" id="iris_shader"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(58, 73)
@@ -22,13 +24,20 @@ size = Vector2(58, 73)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_multiply"]
 blend_mode = 3
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iris_transition"]
+shader = ExtResource("iris_shader")
+shader_parameter/iris_radius = 0.0
+shader_parameter/edge_softness = 0.012
+
 [node name="MiniGame" type="Node2D"]
 script = ExtResource("1_y5gxj")
 metadata/_edit_horizontal_guides_ = [-143.0]
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
+offset_left = -4.0
+offset_right = 1671.0
+offset_bottom = 939.0
+scale = Vector2(0.77, 0.77)
 texture = ExtResource("2_rqxjr")
 
 [node name="Player" type="CharacterBody2D" parent="."]
@@ -163,6 +172,17 @@ offset_right = 1075.0
 offset_bottom = 516.0
 texture = ExtResource("11_qoybj")
 
+[node name="TransitionOverlay" type="ColorRect" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_iris_transition")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
 [node name="AudioMinijuego" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_0amjk")
 parameters/looping = false
@@ -175,13 +195,15 @@ offset_bottom = 40.0
 
 [node name="WrongSound" type="AudioStreamPlayer" parent="Control"]
 stream = ExtResource("12_aawig")
-volume_db = 12.0
+volume_db = 15.0
 
 [node name="RightSound" type="AudioStreamPlayer" parent="Control"]
 stream = ExtResource("13_qoybj")
 
 [node name="TimeOverSound" type="AudioStreamPlayer" parent="Control"]
 stream = ExtResource("14_3opo0")
-volume_db = 12.0
+volume_db = 15.0
 
 [node name="Spinning" type="AudioStreamPlayer" parent="Control"]
+stream = ExtResource("15_spin")
+volume_db = 15.0
