@@ -122,10 +122,10 @@ texture = ExtResource("8_rjahh")
 
 [node name="flecha_siguiente" type="TextureButton" parent="."]
 visible = false
-offset_left = 1019.0
-offset_top = 657.0
-offset_right = 1059.0
-offset_bottom = 681.0
+offset_left = 1028.0
+offset_top = 678.0
+offset_right = 1068.0
+offset_bottom = 702.0
 texture_normal = ExtResource("9_aq5w1")
 
 [node name="burbuja_pensamiento" type="TextureRect" parent="."]
