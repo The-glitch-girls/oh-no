@@ -28,7 +28,7 @@
 				],
 				"thought": "¿Cuántas veces más pueden matar a la gente unos delfines?",
 				"min_shields": 0,
-				"self_esteem_change": -5,
+				"self_esteem_change": -10,
 				"result": "accepted"
 			  },
 			  {
@@ -39,7 +39,7 @@
 				],
 				"thought": "Al menos no tendré que ver 2 horas de delfines asesinos…",
 				"min_shields": 6,
-				"self_esteem_change": 3,
+				"self_esteem_change": 8,
 				"result": "negotiated"
 			  },
 			  {
@@ -50,7 +50,7 @@
 				],
 				"thought": "No tengo por qué aceptar una salida para no herir tu ego.",
 				"min_shields": 10,
-				"self_esteem_change": 5,
+				"self_esteem_change": 15,
 				"result": "refused"
 			  }
 			]
@@ -102,7 +102,7 @@
 						],
 						"thought": "¡A este paso, voy a terminar graduándome por ambos!",
 						"min_shields": 0,
-						"self_esteem_change": -5,
+						"self_esteem_change": -10,
 						"result": "accepted"
 					  },
 			  {
@@ -112,7 +112,7 @@
 				],
 				"thought": "Eso servirá para terminar más rápido. Bastante ya tengo con hacerlo todo yo.",
 				"min_shields": 6,
-				"self_esteem_change": 3,
+				"self_esteem_change": 8,
 				"result": "negotiated"
 			  },
 			  {
@@ -123,7 +123,7 @@
 				],
 				"thought": "No voy a sacrificar mi nota por alguien que siempre está poniendo excusas.",
 				"min_shields": 10,
-				"self_esteem_change": 5,
+				"self_esteem_change": 15,
 				"result": "refused"
 			  }
 			]
@@ -172,7 +172,7 @@
 				],
 				"thought": "Ahora tengo que ver como revender mi entrada, mis amigas me van a matar.",
 				"min_shields": 0,
-				"self_esteem_change": -5,
+				"self_esteem_change": -10,
 				"result": "accepted"
 			  },
 			  {
@@ -182,7 +182,7 @@
 				],
 				"thought": "Supongo que me perderé el intercambio de freebies, pero en fin",
 				"min_shields": 6,
-				"self_esteem_change": 3,
+				"self_esteem_change": 8,
 				"result": "negotiated"
 			  },
 			  {
@@ -193,7 +193,7 @@
 				],
 				"thought": "Ni loca cambio mi concierto, su Magic Land será un NO NO Land",
 				"min_shields": 10,
-				"self_esteem_change": 5,
+				"self_esteem_change": 15,
 				"result": "refused"
 			  }
 			]

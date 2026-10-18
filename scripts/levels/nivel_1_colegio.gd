@@ -10,6 +10,10 @@ extends Node2D
 @onready var burbuja_pensamiento = $burbuja_pensamiento
 @onready var txtPensamiento = $burbuja_pensamiento/txtPensamiento
 @onready var btnMinijuego = $btnMinijuego
+@onready var autoestima_fondo: TextureRect = $HUD/AutoestimaBarra/AutoestimaFondo
+@onready var relleno_clip: Control = $HUD/AutoestimaBarra/RellenoClip
+@onready var autoestima_relleno: TextureRect = $HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
+@onready var msx_player: AudioStreamPlayer2D = $AudioNovela
 
 const FILE_PATH = "res://assets/data/niveles.json"
 const VELOCIDAD_ESCRITURA = 0.035
@@ -20,6 +24,7 @@ var enemigo_actual
 var solicitud_arr_actual: Array = []
 var indice_solicitud: int = 0
 var escribiendo: bool = false
+var tween_autoestima: Tween
 
 # Resultado del minijuego
 var respuesta_textos: Array = []
@@ -30,11 +35,13 @@ var tipo_dialogo: String = "solicitud"
 var indice_dialogo: int = 0
 
 func _ready() -> void:
+	msx_player.play()
 	flecha_siguiente.hide()
 	flecha_siguiente.pressed.connect(_al_presionar_flecha)
 	jugador_sprite.hide()
 	jugador_nombre.hide()
 	burbuja_pensamiento.hide()
+	_actualizar_barra_autoestima()
 	
 	# Cargar el JSON antes de procesar el resultado.
 	var data = GameManager.load_json_file(FILE_PATH)
@@ -85,7 +92,7 @@ func _ready() -> void:
 	else:
 		push_error("No se pudo cargar niveles.json")
 
-		
+	
 		
 func _siguiente_enemigo() -> void:
 	if GlobalManager.enemigoActual < nivel_enemigos.size():
@@ -290,9 +297,13 @@ func procesar_resultado_minijuego() -> void:
 	var costo_tiempo: int = consecuencias.get(
 		"time_cost", 0
 	)
-
+	print("Autoestima antes: ", GlobalManager.autoestima)
+	
 	GlobalManager.autoestima += cambio_autoestima
+	print("Cambio aplicado: ", cambio_autoestima)
+	print("Autoestima después: ", GlobalManager.autoestima)
 	GlobalManager.tiempoRestante -= costo_tiempo
+	_actualizar_barra_autoestima()
 	
 	respuesta_textos = textos
 	reacciones_enemigo = reacciones
@@ -379,6 +390,47 @@ func _mostrar_reaccion_enemigo() -> void:
 		flecha_siguiente.show()
 	else:
 		flecha_siguiente.hide()
-		
+
+func _actualizar_barra_autoestima() -> void:
+	var max_autoestima: float = 80.0
+	
+	var porcentaje := clampf(
+		float(GlobalManager.autoestima) / max_autoestima,
+		0.0,
+		1.0
+	)
+	
+	var material := (
+		$HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
+		.material as ShaderMaterial
+	)
+	
+	if material == null:
+		push_error("AutoestimaRelleno necesita un ShaderMaterial.")
+		return
+
+	if tween_autoestima and tween_autoestima.is_running():
+		tween_autoestima.kill()
+
+	var progreso_actual: float = material.get_shader_parameter("progress")
+	print("Autoestima: ", GlobalManager.autoestima)
+	print("Porcentaje objetivo: ", porcentaje)
+	print("ShaderMaterial: ", material.resource_path)
+	print("Progress antes: ", material.get_shader_parameter("progress"))
+	print("Textura del relleno: ", autoestima_relleno.texture.get_size())
+
+	tween_autoestima = create_tween()
+	tween_autoestima.set_trans(Tween.TRANS_CUBIC)
+	tween_autoestima.set_ease(Tween.EASE_OUT)
+	
+	tween_autoestima.tween_method(
+		func(valor: float) -> void:
+			material.set_shader_parameter("progress", valor),
+		progreso_actual,
+		porcentaje,
+		0.6
+	)
+	
 func _on_btn_minijuego_pressed() -> void:
+	msx_player.stop()
 	get_tree().change_scene_to_file("res://scenes/MiniGame.tscn")

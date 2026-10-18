@@ -1,19 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://dns2jaulhent8"]
+[gd_scene load_steps=17 format=3 uid="uid://dns2jaulhent8"]
 
 [ext_resource type="Script" uid="uid://1wy5aytfl7r8" path="res://scripts/main_scene.gd" id="1_3mqji"]
-[ext_resource type="Texture2D" uid="uid://dpl1qwjog1qv6" path="res://assets/sprites/background/bgPapel.png" id="2_rf2cd"]
+[ext_resource type="Texture2D" uid="uid://dv204woikx0s2" path="res://assets/sprites/background/bgDiario.png" id="2_5crlr"]
 [ext_resource type="Texture2D" uid="uid://bt6rfoc8ucp6u" path="res://assets/sprites/logo/logo_justsay.png" id="2_rpqi1"]
 [ext_resource type="Texture2D" uid="uid://d0wrxf0t0ta2o" path="res://assets/sprites/logo/logo_no.png" id="3_uxrcv"]
-[ext_resource type="Texture2D" uid="uid://bprihvcngauk3" path="res://assets/sprites/botones/btnInicio.png" id="5_a814b"]
+[ext_resource type="Texture2D" uid="uid://b78bujg8cvnt1" path="res://assets/sprites/botones/btnInicio_normal.png" id="5_8xkvn"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_5crlr"]
+[ext_resource type="Texture2D" uid="uid://cxnekixvq7yky" path="res://assets/sprites/botones/btnInicio_pressed.png" id="6_p5x2j"]
+[ext_resource type="Texture2D" uid="uid://cdqxtwn2ta41k" path="res://assets/sprites/diario/doodle.png" id="7_3hf6u"]
 [ext_resource type="Script" uid="uid://3u8dndx01tki" path="res://scripts/typewriter.gd" id="7_5crlr"]
+[ext_resource type="Texture2D" uid="uid://lkird1fndfoa" path="res://assets/sprites/diario/doodle2.png" id="7_yvb8b"]
+[ext_resource type="Texture2D" uid="uid://duyecpdp54q8r" path="res://assets/sprites/diario/corazon.png" id="8_p5x2j"]
+[ext_resource type="Texture2D" uid="uid://c5u1kf1qygb7p" path="res://assets/sprites/diario/doodle3.png" id="9_3hf6u"]
 
 [sub_resource type="Theme" id="Theme_5crlr"]
 default_font = ExtResource("6_5crlr")
 default_font_size = 48
 
 [sub_resource type="Animation" id="Animation_5crlr"]
-length = 0.001
+length = 16.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -21,10 +26,46 @@ tracks/0/path = NodePath("txtIntro:visible_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 2.23333, 3.26667, 3.95251, 7.66667, 8.70845, 11.2, 11.8213, 13, 13.4651, 14.0469, 14.3147, 15, 16),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.071, 0.071, 0.219426, 0.219124, 0.59, 0.589, 0.815, 0.816, 0.928, 0.928, 0.991, 0.991, 1.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("decoCara:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 7.86819),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("decoEquis:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("decoCorazon:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_a814b"]
@@ -62,9 +103,10 @@ script = ExtResource("1_3mqji")
 layout_mode = 2
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = ExtResource("2_rf2cd")
+texture = ExtResource("2_5crlr")
 
 [node name="Container" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,27 +117,38 @@ scale = Vector2(1.00094, 1.00799)
 
 [node name="Logo_JustSay" type="TextureRect" parent="Container"]
 layout_mode = 2
-offset_left = 279.0
-offset_top = 93.0
-offset_right = 908.0
-offset_bottom = 476.0
+offset_left = 286.73
+offset_top = 187.502
+offset_right = 915.73
+offset_bottom = 570.502
+rotation = -0.10472
 texture = ExtResource("2_rpqi1")
 
 [node name="Logo_NO" type="TextureRect" parent="Container"]
 layout_mode = 2
-offset_left = 645.0
-offset_top = 338.0
-offset_right = 907.0
-offset_bottom = 568.0
+offset_left = 668.372
+offset_top = 406.75
+offset_right = 930.372
+offset_bottom = 636.75
+rotation = -0.139626
 texture = ExtResource("3_uxrcv")
+
+[node name="decoEquis" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 990.0
+offset_top = 596.0
+offset_right = 1179.0
+offset_bottom = 720.0
+texture = ExtResource("7_yvb8b")
 
 [node name="btnJugar" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 1046.0
-offset_top = 596.0
-offset_right = 1224.0
-offset_bottom = 685.0
-texture_normal = ExtResource("5_a814b")
+offset_left = 1018.0
+offset_top = 595.0
+offset_right = 1208.0
+offset_bottom = 684.0
+texture_normal = ExtResource("5_8xkvn")
+texture_pressed = ExtResource("6_p5x2j")
 
 [node name="Label" type="Label" parent="btnJugar"]
 visible = false
@@ -106,21 +159,49 @@ text = "Jugar"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="txtIntro" type="RichTextLabel" parent="."]
+[node name="decoFlor" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 94.0
-offset_top = 99.0
-offset_right = 1218.0
-offset_bottom = 649.0
+offset_left = 501.0
+offset_top = 101.0
+offset_right = 580.0
+offset_bottom = 175.0
+texture = ExtResource("7_3hf6u")
+
+[node name="decoCorazon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 990.0
+offset_top = -1.0
+offset_right = 1139.0
+offset_bottom = 125.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("8_p5x2j")
+
+[node name="decoCara" type="TextureRect" parent="."]
+visible = false
+offset_left = 876.0
+offset_top = 249.0
+offset_right = 1040.0
+offset_bottom = 373.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("9_3hf6u")
+
+[node name="txtIntro" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 245.0
+offset_right = 1121.0
+offset_bottom = 714.0
+rotation = -0.146608
 scale = Vector2(1.01758, 0.945503)
 theme = SubResource("Theme_5crlr")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Otro día para ir a la peor guerra que la humanidad haya conocido jamás… la vida.
+theme_override_font_sizes/normal_font_size = 42
+text = "Querido diario.. Otro día más yendo a la guerra, digo, saliendo de casa a lidiar con la vida, entre pendientes, compañeros y personas alborotadas…
 
-Entre tus pendientes, tus compañeros y las personas alborotadas, siempre hay alguien que te pide algo...
+Siempre hay alguien que te pide algo sin pensar en una.…
 
-Me pregunto si esta vez... sabré decirles que no"
+Me pregunto si esta vez.... podré decir que no"
 visible_characters = 0
 visible_ratio = 0.0
 
