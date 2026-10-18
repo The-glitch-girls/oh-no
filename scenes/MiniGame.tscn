@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=8 format=3 uid="uid://bw80cwacc1wpj"]
 
 [ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
 [ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
+[ext_resource type="Texture2D" uid="uid://o1fv8kmfwuls" path="res://assets/sprites/background/levelBackground.png" id="2_1te6h"]
 [ext_resource type="Texture2D" uid="uid://rjwxkxmp6seh" path="res://assets/sprites/personajeMiniGame.png" id="2_y5gxj"]
+[ext_resource type="Texture2D" uid="uid://b18peh66jif24" path="res://assets/sprites/timeOver.png" id="5_80kqo"]
+[ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_r7xng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(132.5, 184)
@@ -10,6 +13,11 @@ size = Vector2(132.5, 184)
 [node name="MiniGame" type="Node2D"]
 script = ExtResource("1_y5gxj")
 level = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_1te6h")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(602, 626)
@@ -34,3 +42,22 @@ metadata/_edit_lock_ = true
 [node name="TimeLabel" type="Label" parent="HUD"]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+offset_left = 146.0
+offset_top = 224.0
+offset_right = 1162.0
+offset_bottom = 502.0
+texture = ExtResource("5_80kqo")
+
+[node name="Label" type="Label" parent="TextureRect2"]
+layout_mode = 0
+offset_right = 1014.0
+offset_bottom = 240.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_r7xng")
+theme_override_font_sizes/font_size = 90
+text = "¡ Se acabó el tiempo !"
+horizontal_alignment = 1
+vertical_alignment = 1

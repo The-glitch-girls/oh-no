@@ -1,31 +1,28 @@
-
 extends Node2D
 
 const SHIELD_SCENE: PackedScene = preload("res://scenes/components/Shield.tscn")
 const THOUGHT_SCENE: PackedScene = preload("res://scenes/components/IntrusiveThought.tscn")
 
-const SHIELD_COUNT: int = 15
+const SHIELD_COUNT: int = 20
 const THOUGHT_COUNT: int = 10
 const TOTAL_OBJECTS: int = SHIELD_COUNT + THOUGHT_COUNT
+const TARGET_SCORE: int = 15
 
 const LEVEL_SETTINGS: Dictionary = {
 	1: {
 		"duration": 20.0,
 		"shield_speed": 180.0,
-		"thought_speed": 200.0,
-		"player_speed": 400.0
+		"thought_speed": 200.0
 	},
 	2: {
 		"duration": 15.0,
 		"shield_speed": 300.0,
-		"thought_speed": 330.0,
-		"player_speed": 300.0
+		"thought_speed": 330.0
 	},
 	3: {
 		"duration": 10.0,
 		"shield_speed": 430.0,
-		"thought_speed": 470.0,
-		"player_speed": 220.0
+		"thought_speed": 470.0
 	}
 }
 
@@ -42,7 +39,9 @@ var thoughts_spawned: int = 0
 var shields_caught: int = 0
 var thoughts_caught: int = 0
 
+var falling_objects: Array[Area2D] = []
 var round_finished: bool = false
+var finish_reason: String = ""
 
 
 func _ready() -> void:
@@ -53,10 +52,10 @@ func _ready() -> void:
 	round_timer.wait_time = settings["duration"]
 	spawn_timer.wait_time = settings["duration"] / TOTAL_OBJECTS
 
-	time_label.text = "Tiempo: %d" % int(round_timer.wait_time)
+	time_label.text = _format_time(round_timer.wait_time)
 
 	spawn_timer.timeout.connect(_spawn_object)
-	round_timer.timeout.connect(_finish_round)
+	round_timer.timeout.connect(_on_time_finished)
 
 	round_timer.start()
 	_spawn_object()
@@ -64,7 +63,15 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if not round_finished:
-		time_label.text = "Tiempo: %d" % ceili(round_timer.time_left)
+		time_label.text = _format_time(round_timer.time_left)
+
+
+func _format_time(seconds_left: float) -> String:
+	var total_seconds: int = ceili(seconds_left)
+	var minutes: int = int(total_seconds / 60.0)
+	var seconds: int = total_seconds % 60
+
+	return "%02d:%02d" % [minutes, seconds]
 
 
 func _spawn_object() -> void:
@@ -99,14 +106,13 @@ func _spawn_object() -> void:
 		falling_object.hit_player.connect(_on_thought_caught)
 		thoughts_spawned += 1
 
-	var screen_size: Vector2 = get_viewport_rect().size
-
 	falling_object.position = Vector2(
 		randf_range(player.left_limit, player.right_limit),
 		-30.0
 	)
 
 	add_child(falling_object)
+	falling_objects.append(falling_object)
 
 	spawn_timer.start()
 
@@ -117,6 +123,9 @@ func _on_shield_collected() -> void:
 
 	shields_caught += 1
 
+	if shields_caught >= TARGET_SCORE:
+		_finish_round("score")
+
 
 func _on_thought_caught() -> void:
 	if round_finished:
@@ -126,32 +135,36 @@ func _on_thought_caught() -> void:
 	shields_caught = maxi(0, shields_caught - 1)
 
 
-func _finish_round() -> void:
+func _on_time_finished() -> void:
+	_finish_round("timeout")
+
+
+func _finish_round(reason: String) -> void:
 	if round_finished:
 		return
 
 	round_finished = true
+	finish_reason = reason
+
 	spawn_timer.stop()
+	round_timer.stop()
+	time_label.text = "00:00" if reason == "timeout" else _format_time(round_timer.time_left)
 
-	time_label.text = "Tiempo: 0"
-
-	for falling_object in get_children():
-		if falling_object is Area2D:
-			if falling_object.scene_file_path == SHIELD_SCENE.resource_path:
-				falling_object.queue_free()
-			elif falling_object.scene_file_path == THOUGHT_SCENE.resource_path:
-				falling_object.queue_free()
+	for falling_object in falling_objects:
+		if is_instance_valid(falling_object):
+			falling_object.queue_free()
 
 	print("Nivel: ", level)
-	print("Escudos atrapados: ", shields_caught)
+	print("Motivo del final: ", finish_reason)
+	print("Escudos netos: ", shields_caught)
 	print("Pensamientos atrapados: ", thoughts_caught)
 	print("Resultado: ", get_result_color())
 
 
 func get_result_color() -> String:
 	if shields_caught <= 5:
-		return "red"
-	elif shields_caught <= 9:
-		return "yellow"
+		return "blue"
+	elif shields_caught <= 10:
+		return "purple"
 	else:
-		return "green"
+		return "pink"
