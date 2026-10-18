@@ -1,7 +1,19 @@
 extends Node
 
+const BUTTON_PRESSED_SOUND: AudioStream = preload(
+	"res://assets/sounds/sfx/pressed.mp3"
+)
+
+var button_sound_player: AudioStreamPlayer
+
 func _ready() -> void:
-	pass
+	button_sound_player = AudioStreamPlayer.new()
+	button_sound_player.stream = BUTTON_PRESSED_SOUND
+	add_child(button_sound_player)
+
+
+func play_button_pressed_sound() -> void:
+	button_sound_player.play()
 	
 func resetar_variables() -> void:
 		GlobalManager.etapaActual = 0

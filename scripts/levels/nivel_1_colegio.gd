@@ -15,6 +15,10 @@ extends Node2D
 @onready var relleno_clip: Control = $HUD/AutoestimaBarra/RellenoClip
 @onready var autoestima_relleno: TextureRect = $HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
 @onready var msx_player: AudioStreamPlayer2D = $AudioNovela
+@onready var transition_overlay: ColorRect = $HUD/TransitionOverlay
+@onready var transition_material: ShaderMaterial = (
+	transition_overlay.material as ShaderMaterial
+)
 
 const FILE_PATH = "res://assets/data/niveles.json"
 const VELOCIDAD_ESCRITURA = 0.035
@@ -40,6 +44,9 @@ func _ready() -> void:
 	msx_player.play()
 	flecha_siguiente.hide()
 	flecha_siguiente.pressed.connect(_al_presionar_flecha)
+	flecha_siguiente.button_down.connect(GameManager.play_button_pressed_sound)
+	btnMinijuego.button_down.connect(GameManager.play_button_pressed_sound)
+	btnSgteEnemigo.button_down.connect(GameManager.play_button_pressed_sound)
 	jugador_sprite.hide()
 	jugador_nombre.hide()
 	burbuja_pensamiento.hide()
@@ -71,6 +78,17 @@ func _ready() -> void:
 
 		# Si regresamos del minijuego, procesar el resultado.
 		if GlobalManager.minijuegoCompletado:
+			transition_overlay.show()
+			transition_material.set_shader_parameter("iris_radius", 0.0)
+			var iris_open_tween: Tween = create_tween()
+			iris_open_tween.tween_property(
+				transition_material,
+				"shader_parameter/iris_radius",
+				1.2,
+				0.7
+			)
+			iris_open_tween.finished.connect(transition_overlay.hide)
+
 			GlobalManager.etapaActualId = "escuela"
 
 			enemigo_actual = nivel_enemigos[
@@ -488,7 +506,18 @@ func _siguiente_nivel() -> void:
 			print("No hay más niveles implementados.")
 			
 func _on_btn_minijuego_pressed() -> void:
+	btnMinijuego.disabled = true
 	msx_player.stop()
+	transition_overlay.show()
+	transition_material.set_shader_parameter("iris_radius", 1.2)
+	var transition_tween: Tween = create_tween()
+	transition_tween.tween_property(
+		transition_material,
+		"shader_parameter/iris_radius",
+		0.0,
+		0.7
+	)
+	await transition_tween.finished
 	get_tree().change_scene_to_file("res://scenes/MiniGame.tscn")
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dns2jaulhent8"]
+[gd_scene load_steps=18 format=3 uid="uid://dns2jaulhent8"]
 
 [ext_resource type="Script" uid="uid://1wy5aytfl7r8" path="res://scripts/main_scene.gd" id="1_3mqji"]
 [ext_resource type="Texture2D" uid="uid://dv204woikx0s2" path="res://assets/sprites/background/bgDiario.png" id="2_5crlr"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://lkird1fndfoa" path="res://assets/sprites/diario/doodle2.png" id="7_yvb8b"]
 [ext_resource type="Texture2D" uid="uid://duyecpdp54q8r" path="res://assets/sprites/diario/corazon.png" id="8_p5x2j"]
 [ext_resource type="Texture2D" uid="uid://c5u1kf1qygb7p" path="res://assets/sprites/diario/doodle3.png" id="9_3hf6u"]
+[ext_resource type="AudioStream" uid="uid://l727aa20tbwu" path="res://assets/sounds/sfx/pressed.mp3" id="10_pressed"]
 
 [sub_resource type="Theme" id="Theme_5crlr"]
 default_font = ExtResource("6_5crlr")
@@ -212,4 +213,9 @@ libraries = {
 }
 script = ExtResource("7_5crlr")
 
+[node name="buttonPressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_pressed")
+volume_db = 15.0
+
+[connection signal="button_down" from="btnJugar" to="buttonPressed" method="play"]
 [connection signal="pressed" from="btnJugar" to="." method="_on_btn_jugar_pressed"]

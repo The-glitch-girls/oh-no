@@ -3,6 +3,7 @@ extends Node2D
 @onready var btnCreditos = $btnCreditos
 
 func _ready():
+	btnCreditos.button_down.connect(GameManager.play_button_pressed_sound)
 	await get_tree().create_timer(1.0).timeout
 	btnCreditos.visible = true
 

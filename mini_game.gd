@@ -24,11 +24,16 @@ const PLAYER_EYES_CLOSED: Texture2D = preload(
 @onready var bar_background: TextureRect = $HUD/ResultBar/BarBackground
 @onready var bar_indicator: TextureRect = $HUD/ResultBar/BarIndicator
 @onready var instructions: Control = $HUD/Instrucciones
+@onready var transition_overlay: ColorRect = $HUD/TransitionOverlay
+@onready var transition_material: ShaderMaterial = (
+	transition_overlay.material as ShaderMaterial
+)
 
 @onready var msx_player: AudioStreamPlayer2D = $AudioMinijuego
 @onready var wrong_sound: AudioStreamPlayer = $Control/WrongSound
 @onready var right_sound: AudioStreamPlayer = $Control/RightSound
 @onready var time_over_sound: AudioStreamPlayer = $Control/TimeOverSound
+@onready var spinning_sound: AudioStreamPlayer = $Control/Spinning
 
 var shields_spawned: int = 0
 var thoughts_spawned: int = 0
@@ -64,12 +69,30 @@ func _ready() -> void:
 	multiply_rect.modulate.a = 0.0
 	tint_rect.modulate.a = 0.0
 	screen_color_name = ""
+	transition_overlay.show()
+	transition_material.set_shader_parameter("iris_radius", 0.0)
+	var transition_tween: Tween = create_tween()
+	transition_tween.tween_property(
+		transition_material,
+		"shader_parameter/iris_radius",
+		1.2,
+		0.7
+	)
+	player.set_physics_process(false)
 
 	if not spawn_timer.timeout.is_connected(_spawn_object):
 		spawn_timer.timeout.connect(_spawn_object)
 
 	if not round_timer.timeout.is_connected(_on_time_finished):
 		round_timer.timeout.connect(_on_time_finished)
+
+	await transition_tween.finished
+	if not is_inside_tree():
+		return
+	transition_overlay.hide()
+	var spin_stream: AudioStreamMP3 = spinning_sound.stream as AudioStreamMP3
+	if spin_stream != null:
+		spin_stream.loop = true
 
 	instructions.show()
 	var instructions_target_y: float = instructions_banner.position.y
@@ -84,7 +107,6 @@ func _ready() -> void:
 		instructions_target_y,
 		0.65
 	)
-	player.set_physics_process(false)
 	msx_player.play()
 	player_open_eyes_texture = player_sprite.texture
 	_blink_loop()
@@ -363,6 +385,22 @@ func _play_end_sequence() -> void:
 	if not is_inside_tree():
 		return
 
+	transition_overlay.show()
+	transition_material.set_shader_parameter("iris_radius", 1.2)
+	var return_iris_tween: Tween = create_tween()
+	return_iris_tween.set_trans(Tween.TRANS_CUBIC)
+	return_iris_tween.set_ease(Tween.EASE_IN)
+	return_iris_tween.tween_property(
+		transition_material,
+		"shader_parameter/iris_radius",
+		0.0,
+		0.7
+	)
+	await return_iris_tween.finished
+
+	if not is_inside_tree():
+		return
+
 	get_tree().change_scene_to_file(
 		"res://scenes/levels/nivel1_colegio.tscn"
 	)
@@ -389,6 +427,7 @@ func _animate_result_indicator() -> void:
 	)
 
 	bar_indicator.position.y = indicator_bottom_y
+	spinning_sound.play()
 
 	var indicator_tween: Tween = create_tween()
 	indicator_tween.set_trans(Tween.TRANS_CUBIC)
@@ -407,6 +446,7 @@ func _animate_result_indicator() -> void:
 		2.4
 	)
 	await indicator_tween.finished
+	spinning_sound.stop()
 
 	_update_color_while_indicator_moves(float(shields_caught))
 	if screen_color_tween != null and screen_color_tween.is_running():
