@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://eaxefxbuwho4"]
+
+[ext_resource type="Texture2D" uid="uid://cp3ylc0627ikr" path="res://assets/sprites/background/bg_creditos.png" id="1_lm0yj"]
+
+[node name="Creditos" type="Node2D"]
+
+[node name="bgCreditos" type="TextureRect" parent="."]
+offset_right = 2560.0
+offset_bottom = 1434.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_lm0yj")
