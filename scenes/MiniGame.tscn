@@ -1,18 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=12 format=3 uid="uid://bw80cwacc1wpj"]
 
 [ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
 [ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
 [ext_resource type="Texture2D" uid="uid://o1fv8kmfwuls" path="res://assets/sprites/background/levelBackground.png" id="2_1te6h"]
 [ext_resource type="Texture2D" uid="uid://rjwxkxmp6seh" path="res://assets/sprites/personajeMiniGame.png" id="2_y5gxj"]
 [ext_resource type="Texture2D" uid="uid://b18peh66jif24" path="res://assets/sprites/timeOver.png" id="5_80kqo"]
+[ext_resource type="Texture2D" uid="uid://b1lw5nks4tyk" path="res://assets/sprites/hora.png" id="5_rqxjr"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_r7xng"]
+[ext_resource type="Texture2D" uid="uid://o780liwp3qr6" path="res://assets/sprites/barra_decisiones.png" id="8_0amjk"]
+[ext_resource type="Texture2D" uid="uid://cy8m2ur7q4pd8" path="res://assets/sprites/indicador.png" id="9_itx4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(132.5, 184)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_multiply"]
+blend_mode = 3
+
 [node name="MiniGame" type="Node2D"]
 script = ExtResource("1_y5gxj")
-level = 3
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1280.0
@@ -39,19 +44,68 @@ metadata/_edit_lock_ = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="TimeLabel" type="Label" parent="HUD"]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="TimeContainer" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="TimeFrame" type="TextureRect" parent="HUD/TimeContainer"]
+layout_mode = 0
+offset_right = 154.0
+offset_bottom = 66.0
+texture = ExtResource("5_rqxjr")
+
+[node name="TimeLabel" type="Label" parent="HUD/TimeContainer"]
+layout_mode = 0
+offset_left = 44.0
+offset_right = 154.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_r7xng")
+theme_override_font_sizes/font_size = 40
+text = "00:20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndOverlay" type="Control" parent="HUD"]
 visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MultiplyRect" type="ColorRect" parent="HUD/EndOverlay"]
+material = SubResource("CanvasItemMaterial_multiply")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TintRect" type="ColorRect" parent="HUD/EndOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.5)
+
+[node name="TimeOutBanner" type="TextureRect" parent="HUD/EndOverlay"]
+layout_mode = 0
 offset_left = 146.0
 offset_top = 224.0
 offset_right = 1162.0
 offset_bottom = 502.0
 texture = ExtResource("5_80kqo")
 
-[node name="Label" type="Label" parent="TextureRect2"]
+[node name="TimeOutLabel" type="Label" parent="HUD/EndOverlay/TimeOutBanner"]
 layout_mode = 0
 offset_right = 1014.0
 offset_bottom = 240.0
@@ -61,3 +115,26 @@ theme_override_font_sizes/font_size = 90
 text = "¡ Se acabó el tiempo !"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ResultBar" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BarBackground" type="TextureRect" parent="HUD/ResultBar"]
+layout_mode = 0
+offset_left = 1074.0
+offset_top = 64.0
+offset_right = 1151.0
+offset_bottom = 624.0
+texture = ExtResource("8_0amjk")
+
+[node name="BarIndicator" type="TextureRect" parent="HUD/ResultBar"]
+layout_mode = 0
+offset_left = 1076.0
+offset_top = 315.0
+offset_right = 1208.0
+offset_bottom = 363.0
+texture = ExtResource("9_itx4y")
