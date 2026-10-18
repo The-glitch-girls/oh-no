@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qaodvqip1dxb"
-path="res://.godot/imported/jugadora_si.png-9cb9d5151346210ec660fefd11a29d85.ctex"
+path="res://.godot/imported/jugadora_complaciente.png-c285f5940c5384c96b49412cedd760a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/dialogo/jugadora_si.png"
-dest_files=["res://.godot/imported/jugadora_si.png-9cb9d5151346210ec660fefd11a29d85.ctex"]
+source_file="res://assets/sprites/dialogo/jugadora_complaciente.png"
+dest_files=["res://.godot/imported/jugadora_complaciente.png-c285f5940c5384c96b49412cedd760a9.ctex"]
 
 [params]
 
