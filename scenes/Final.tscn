@@ -1,3 +1,25 @@
-[gd_scene format=3 uid="uid://cqfxxyw1vndv5"]
+[gd_scene load_steps=5 format=3 uid="uid://cqfxxyw1vndv5"]
+
+[ext_resource type="Texture2D" uid="uid://dg46eseomlego" path="res://assets/sprites/background/bgFinal.png" id="1_jncbw"]
+[ext_resource type="Script" uid="uid://dgu8x21clsa5o" path="res://scripts/final.gd" id="1_sfde1"]
+[ext_resource type="Texture2D" uid="uid://dvwyr1hsbku7r" path="res://assets/sprites/botones/btnContinuar_normal.png" id="3_dexd0"]
+[ext_resource type="Texture2D" uid="uid://dkw4cyckcdiqo" path="res://assets/sprites/botones/btnContinuar_pressed.png" id="4_npxuk"]
 
 [node name="Final" type="Node2D"]
+script = ExtResource("1_sfde1")
+
+[node name="bgFinal" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_jncbw")
+
+[node name="btnCreditos" type="TextureButton" parent="."]
+visible = false
+offset_left = 1003.0
+offset_top = 607.0
+offset_right = 1262.0
+offset_bottom = 690.0
+texture_normal = ExtResource("3_dexd0")
+texture_pressed = ExtResource("4_npxuk")
+
+[connection signal="pressed" from="btnCreditos" to="." method="_on_btn_creditos_pressed"]
