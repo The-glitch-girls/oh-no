@@ -74,8 +74,7 @@
 			"refuse": {
 			  "time_cost": 0,
 			  "enemy_reaction": [
-				"¿¡Cómo que no te interesa salir conmigo!? Soy el chico más popular de la escuela.",
-				"¿Me estás rechazando a mí? ¿Cómo que no te gusta la saga de Delfines asesinos?",
+				"¿¡Cómo que no te interesa salir conmigo!? Soy el chico más popular de la escuela. ¿Me estás rechazando a mí? ¿Cómo que no te gusta la saga de Delfines asesinos?",
 				"¡Es la mejor saga de todas! Ja, está bien, hazte la difícil. Ya cambiarás de opinión cuando te des cuenta de lo que te pierdes."
 			  ]
 			}

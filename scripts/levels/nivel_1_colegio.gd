@@ -10,6 +10,7 @@ extends Node2D
 @onready var burbuja_pensamiento = $burbuja_pensamiento
 @onready var txtPensamiento = $burbuja_pensamiento/txtPensamiento
 @onready var btnMinijuego = $btnMinijuego
+@onready var btnSgteEnemigo = $btnSgteEnemigo
 @onready var autoestima_fondo: TextureRect = $HUD/AutoestimaBarra/AutoestimaFondo
 @onready var relleno_clip: Control = $HUD/AutoestimaBarra/RellenoClip
 @onready var autoestima_relleno: TextureRect = $HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
@@ -35,6 +36,7 @@ var tipo_dialogo: String = "solicitud"
 var indice_dialogo: int = 0
 
 func _ready() -> void:
+	print("ready fue llamado")
 	msx_player.play()
 	flecha_siguiente.hide()
 	flecha_siguiente.pressed.connect(_al_presionar_flecha)
@@ -95,12 +97,44 @@ func _ready() -> void:
 	
 		
 func _siguiente_enemigo() -> void:
-	if GlobalManager.enemigoActual < nivel_enemigos.size():
-		GlobalManager.enemigoActual =+ 1
-		enemigo_actual = nivel_enemigos[GlobalManager.enemigoActual]
-		_actualizar_enemigo()
+	print("CARGANDO SIGGUIENTE ENEMIGO ... ")
+	btnSgteEnemigo.hide()
+	var siguiente_indice: int = GlobalManager.enemigoActual + 1
+	
+	if siguiente_indice >= nivel_enemigos.size():
+		print("No hay más enemigos en esta etapa.")
+		# TODO transicion
+		#await _transicion_siguiente()
+		_siguiente_nivel()
+		return
+	
+	# TODO transicion
+	#await _transicion_siguiente()
+	GlobalManager.enemigoActual = siguiente_indice
+	enemigo_actual = nivel_enemigos[siguiente_indice]
+	
+	# Actualizar el ID que consulta GlobalManager.
+	GlobalManager.personajeActualId = str(
+		enemigo_actual.get("id", "")
+	)
+	
+	# Limpiar el resultado anterior del minijuego
+	GlobalManager.respuestaSeleccionada = ""
+	GlobalManager.minijuegoCompletado = false
+	
+	tipo_dialogo = "solicitud"
+	indice_dialogo = 0
+	indice_solicitud = 0
+	escribiendo = false
+	flecha_siguiente.hide()
+	_actualizar_enemigo()
 
+func _transicion_siguiente() -> void:
+	pass
+	
+	
 func _actualizar_enemigo() -> void:
+	print("AZTUALIZANDO ENEMIGO ... ")
 	# Reiniciar el diálogo del enemigo actual.
 	indice_solicitud = 0
 	solicitud_arr_actual = enemigo_actual.get("request", [])
@@ -116,9 +150,9 @@ func _actualizar_enemigo() -> void:
 	if solicitud_arr_actual.is_empty():
 		_mostrar_jugador()
 		return
-		
-	_mostrar_solicitud()
 	
+	print("deberia mostrar solicitud")
+	_mostrar_solicitud()
 	
 	txtMensaje.text = enemigo_actual.request[0]
 		
@@ -168,7 +202,8 @@ func _al_presionar_flecha() -> void:
 					flecha_siguiente.show()
 				else:
 					await get_tree().create_timer(1.0).timeout
-					_mostrar_reaccion_enemigo()
+					await _mostrar_reaccion_enemigo()
+
 		"reaccion":
 			if indice_dialogo < reacciones_enemigo.size() - 1:
 				indice_dialogo += 1
@@ -180,6 +215,10 @@ func _al_presionar_flecha() -> void:
 					flecha_siguiente.show()
 				else:
 					flecha_siguiente.hide()
+				
+				# WIP 
+				await get_tree().create_timer(1.5).timeout
+				btnSgteEnemigo.show()
 
 func _mostrar_jugador(pensamiento: String = "", respuesta_inicial: String = "") -> void:
 	flecha_siguiente.hide()
@@ -225,6 +264,7 @@ func _mostrar_jugador(pensamiento: String = "", respuesta_inicial: String = "") 
 	await get_tree().create_timer(1.0).timeout
 	
 	btnMinijuego.visible = true
+	btnSgteEnemigo.visible = false
 
 
 func _escribir_texto(label: Label, mensaje: String) -> void:
@@ -391,7 +431,8 @@ func _mostrar_reaccion_enemigo() -> void:
 	if reacciones_enemigo.size() > 1:
 		flecha_siguiente.show()
 	else:
-		flecha_siguiente.hide()
+		flecha_siguiente.hide()	
+	
 
 func _actualizar_barra_autoestima() -> void:
 	var max_autoestima: float = 80.0
@@ -433,6 +474,22 @@ func _actualizar_barra_autoestima() -> void:
 		0.6
 	)
 	
+#TODO ir al sgte nivel
+func _siguiente_nivel() -> void:
+	GlobalManager.etapaActual += 1
+
+	match GlobalManager.etapaActual:
+		2:
+			get_tree().change_scene_to_file(
+				"res://scenes/Final.tscn"
+			)
+		_:
+			print("No hay más niveles implementados.")
+			
 func _on_btn_minijuego_pressed() -> void:
 	msx_player.stop()
 	get_tree().change_scene_to_file("res://scenes/MiniGame.tscn")
+
+
+func _on_btn_sgte_enemigo_pressed() -> void:
+	_siguiente_enemigo()
