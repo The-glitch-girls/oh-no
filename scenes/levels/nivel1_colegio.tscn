@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://wpm5hcni5158"]
+[gd_scene load_steps=21 format=3 uid="uid://wpm5hcni5158"]
 
 [ext_resource type="Script" uid="uid://d38rribceg05o" path="res://scripts/levels/nivel_1_colegio.gd" id="1_6oakp"]
 [ext_resource type="Texture2D" uid="uid://3x10fm6nct7y" path="res://assets/sprites/background/bgEtapa1.png" id="1_mjf5d"]
@@ -13,7 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://cux6g2baf8umu" path="res://assets/sprites/botones/btnBg.png" id="11_rscja"]
 [ext_resource type="Texture2D" uid="uid://bm0ahd21thcd0" path="res://assets/sprites/hud/barra_autoestima_under.png" id="12_pt4mb"]
 [ext_resource type="Texture2D" uid="uid://ce3c8phlts20x" path="res://assets/sprites/hud/barra_autoestima_fill.png" id="13_pofxs"]
+[ext_resource type="Shader" uid="uid://d0ij0g055m5qe" path="res://shaders/autoestima_barra.gdshader" id="13_q472x"]
 [ext_resource type="Texture2D" uid="uid://go13mp1l6ho3" path="res://assets/sprites/hud/barra_autoestima_icon.png" id="14_jhijq"]
+[ext_resource type="AudioStream" uid="uid://c0fjytk8uns12" path="res://assets/sounds/msx_novel.ogg" id="16_kscvh"]
 
 [sub_resource type="Theme" id="Theme_6oakp"]
 default_font = ExtResource("4_t4yib")
@@ -26,6 +28,10 @@ font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_aq5w1"]
 default_font = ExtResource("4_t4yib")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q472x"]
+shader = ExtResource("13_q472x")
+shader_parameter/progress = 0.25
 
 [node name="Etapa1" type="Node2D"]
 script = ExtResource("1_6oakp")
@@ -186,10 +192,11 @@ clip_contents = true
 anchors_preset = 0
 offset_left = 50.0
 offset_top = 23.0
-offset_right = 90.0
-offset_bottom = 63.0
+offset_right = 178.0
+offset_bottom = 62.0
 
 [node name="AutoestimaRelleno" type="TextureRect" parent="HUD/AutoestimaBarra/RellenoClip"]
+material = SubResource("ShaderMaterial_q472x")
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -208,5 +215,9 @@ offset_right = 101.0
 offset_bottom = 71.0
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("14_jhijq")
+
+[node name="AudioNovela" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_kscvh")
+parameters/looping = false
 
 [connection signal="pressed" from="btnMinijuego" to="." method="_on_btn_minijuego_pressed"]

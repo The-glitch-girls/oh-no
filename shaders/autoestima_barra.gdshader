@@ -1,38 +1,30 @@
 shader_type canvas_item;
 
-uniform float progreso : hint_range(0.0, 1.0) = 0.5;
-uniform float radio : hint_range(0.0, 0.5) = 0.5;
+uniform float progress : hint_range(0.0, 1.0) = 0.25;
 
 void fragment() {
-    vec4 color = texture(TEXTURE, UV) * COLOR;
+    vec4 color = texture(TEXTURE, UV);
 
-    // Radio de la cápsula en coordenadas UV.
-    float r = min(radio, 0.5);
+    float aspect = TEXTURE_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.x;
+    float width = aspect * clamp(progress, 0.0, 1.0);
 
-    // La posición del extremo sigue el progreso.
-    float extremo = clamp(progreso, 0.0, 1.0);
+    float radius = min(0.5, width * 0.5);
 
-    // Distancia al borde redondeado del extremo derecho.
-    float centro_x = extremo - r;
-    float centro_y = 0.5;
+    vec2 p = vec2(UV.x * aspect, UV.y);
+    vec2 half_size = vec2(width * 0.5, 0.5);
+    vec2 q = abs(p - half_size) - (half_size - vec2(radius));
 
-    float dx = max(abs(UV.x - centro_x) - (extremo > r ? extremo - r : 0.0), 0.0);
-    float dy = abs(UV.y - centro_y) - (0.5 - r);
+    float distance_to_edge =
+        length(max(q, vec2(0.0))) +
+        min(max(q.x, q.y), 0.0) -
+        radius;
 
-    float distancia = length(vec2(dx, dy)) - r;
-
-    // Máscara antialias para bordes suaves.
-    float mascara = 1.0 - smoothstep(
-        -fwidth(distancia),
-        fwidth(distancia),
-        distancia
+    float mask = 1.0 - smoothstep(
+        -0.005,
+         0.005,
+         distance_to_edge
     );
 
-    // Ocultar todo lo que queda a la derecha del extremo.
-    float visible = step(UV.x, extremo);
-
-    COLOR = vec4(
-        color.rgb,
-        color.a * mascara * visible
-    );
+    color.a *= mask;
+    COLOR = color;
 }

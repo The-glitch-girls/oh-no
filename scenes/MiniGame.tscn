@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://bw80cwacc1wpj"]
+[gd_scene load_steps=13 format=3 uid="uid://bw80cwacc1wpj"]
 
 [ext_resource type="Script" uid="uid://xevfo8x0wv3p" path="res://scripts/player.gd" id="1_y4rhp"]
 [ext_resource type="Script" uid="uid://cmguahsnvcg5t" path="res://mini_game.gd" id="1_y5gxj"]
 [ext_resource type="Texture2D" uid="uid://o1fv8kmfwuls" path="res://assets/sprites/background/levelBackground.png" id="2_1te6h"]
-[ext_resource type="Texture2D" uid="uid://rjwxkxmp6seh" path="res://assets/sprites/personajeMiniGame.png" id="2_y5gxj"]
+[ext_resource type="Texture2D" uid="uid://c6lb5gj1hn45a" path="res://assets/sprites/pixel_final.png" id="4_rqxjr"]
 [ext_resource type="Texture2D" uid="uid://b18peh66jif24" path="res://assets/sprites/timeOver.png" id="5_80kqo"]
 [ext_resource type="Texture2D" uid="uid://b1lw5nks4tyk" path="res://assets/sprites/hora.png" id="5_rqxjr"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_r7xng"]
 [ext_resource type="Texture2D" uid="uid://o780liwp3qr6" path="res://assets/sprites/barra_decisiones.png" id="8_0amjk"]
 [ext_resource type="Texture2D" uid="uid://cy8m2ur7q4pd8" path="res://assets/sprites/indicador.png" id="9_itx4y"]
+[ext_resource type="AudioStream" uid="uid://b4pa7p0d1cjb" path="res://assets/sounds/minijuego.ogg" id="10_0amjk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(58, 73)
@@ -30,8 +31,8 @@ position = Vector2(602, 626)
 script = ExtResource("1_y4rhp")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-scale = Vector2(1, 1.046)
-texture = ExtResource("2_y5gxj")
+scale = Vector2(0.5, 0.523)
+texture = ExtResource("4_rqxjr")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -138,3 +139,7 @@ offset_top = 315.0
 offset_right = 1208.0
 offset_bottom = 363.0
 texture = ExtResource("9_itx4y")
+
+[node name="AudioMinijuego" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_0amjk")
+parameters/looping = false

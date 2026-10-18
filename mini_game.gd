@@ -19,6 +19,8 @@ const THOUGHT_SCENE: PackedScene = preload("res://scenes/components/IntrusiveTho
 @onready var bar_background: TextureRect = $HUD/ResultBar/BarBackground
 @onready var bar_indicator: TextureRect = $HUD/ResultBar/BarIndicator
 
+@onready var msx_player: AudioStreamPlayer2D = $AudioMinijuego
+
 var shields_spawned: int = 0
 var thoughts_spawned: int = 0
 
@@ -59,6 +61,7 @@ func _ready() -> void:
 		round_timer.timeout.connect(_on_time_finished)
 
 	round_timer.start()
+	msx_player.play()
 	_spawn_object()
 
 
@@ -179,7 +182,8 @@ func _finish_round(reason: String) -> void:
 	print("Escudos netos: ", shields_caught)
 	print("Pensamientos atrapados: ", thoughts_caught)
 	print("Resultado: ", get_result_color())
-
+	
+	msx_player.stop()
 	_play_end_sequence()
 
 

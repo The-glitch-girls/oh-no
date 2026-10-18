@@ -12,6 +12,8 @@ extends Node2D
 @onready var btnMinijuego = $btnMinijuego
 @onready var autoestima_fondo: TextureRect = $HUD/AutoestimaBarra/AutoestimaFondo
 @onready var relleno_clip: Control = $HUD/AutoestimaBarra/RellenoClip
+@onready var autoestima_relleno: TextureRect = $HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
+@onready var msx_player: AudioStreamPlayer2D = $AudioNovela
 
 const FILE_PATH = "res://assets/data/niveles.json"
 const VELOCIDAD_ESCRITURA = 0.035
@@ -33,6 +35,7 @@ var tipo_dialogo: String = "solicitud"
 var indice_dialogo: int = 0
 
 func _ready() -> void:
+	msx_player.play()
 	flecha_siguiente.hide()
 	flecha_siguiente.pressed.connect(_al_presionar_flecha)
 	jugador_sprite.hide()
@@ -89,7 +92,7 @@ func _ready() -> void:
 	else:
 		push_error("No se pudo cargar niveles.json")
 
-		
+	
 		
 func _siguiente_enemigo() -> void:
 	if GlobalManager.enemigoActual < nivel_enemigos.size():
@@ -389,28 +392,45 @@ func _mostrar_reaccion_enemigo() -> void:
 		flecha_siguiente.hide()
 
 func _actualizar_barra_autoestima() -> void:
+	var max_autoestima: float = 80.0
+	
 	var porcentaje := clampf(
-		float(GlobalManager.autoestima) / 40.0,
+		float(GlobalManager.autoestima) / max_autoestima,
 		0.0,
 		1.0
 	)
 	
-	var ancho_objetivo := autoestima_fondo.size.x * porcentaje
+	var material := (
+		$HUD/AutoestimaBarra/RellenoClip/AutoestimaRelleno
+		.material as ShaderMaterial
+	)
 	
+	if material == null:
+		push_error("AutoestimaRelleno necesita un ShaderMaterial.")
+		return
+
 	if tween_autoestima and tween_autoestima.is_running():
 		tween_autoestima.kill()
-	
+
+	var progreso_actual: float = material.get_shader_parameter("progress")
+	print("Autoestima: ", GlobalManager.autoestima)
+	print("Porcentaje objetivo: ", porcentaje)
+	print("ShaderMaterial: ", material.resource_path)
+	print("Progress antes: ", material.get_shader_parameter("progress"))
+	print("Textura del relleno: ", autoestima_relleno.texture.get_size())
+
 	tween_autoestima = create_tween()
 	tween_autoestima.set_trans(Tween.TRANS_CUBIC)
 	tween_autoestima.set_ease(Tween.EASE_OUT)
 	
-	tween_autoestima.tween_property(
-		relleno_clip,
-		"size:x",
-		ancho_objetivo,
+	tween_autoestima.tween_method(
+		func(valor: float) -> void:
+			material.set_shader_parameter("progress", valor),
+		progreso_actual,
+		porcentaje,
 		0.6
 	)
-
 	
 func _on_btn_minijuego_pressed() -> void:
+	msx_player.stop()
 	get_tree().change_scene_to_file("res://scenes/MiniGame.tscn")
