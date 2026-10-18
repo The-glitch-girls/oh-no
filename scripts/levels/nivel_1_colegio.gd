@@ -130,6 +130,7 @@ func _siguiente_enemigo() -> void:
 	_actualizar_enemigo()
 
 func _transicion_siguiente() -> void:
+	
 	pass
 	
 	

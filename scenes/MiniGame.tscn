@@ -183,3 +183,5 @@ stream = ExtResource("13_qoybj")
 [node name="TimeOverSound" type="AudioStreamPlayer" parent="Control"]
 stream = ExtResource("14_3opo0")
 volume_db = 12.0
+
+[node name="Spinning" type="AudioStreamPlayer" parent="Control"]
