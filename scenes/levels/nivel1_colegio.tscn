@@ -1,17 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://wpm5hcni5158"]
+[gd_scene load_steps=10 format=3 uid="uid://wpm5hcni5158"]
 
+[ext_resource type="Script" uid="uid://d38rribceg05o" path="res://scripts/levels/nivel_1_colegio.gd" id="1_6oakp"]
 [ext_resource type="Texture2D" uid="uid://3x10fm6nct7y" path="res://assets/sprites/background/bgEtapa1.png" id="1_mjf5d"]
 [ext_resource type="Texture2D" uid="uid://0kv83u0vhcmj" path="res://assets/sprites/enemigos/diego.png" id="2_5vrj8"]
 [ext_resource type="Texture2D" uid="uid://uwyog4x84e3b" path="res://assets/sprites/jugador/prota_respuesta_complaciente.png" id="2_t4yib"]
 [ext_resource type="Texture2D" uid="uid://5qldilijjyi4" path="res://assets/sprites/dialogo/mensaje.png" id="3_qddh7"]
 [ext_resource type="Texture2D" uid="uid://4k4xwo6pnisc" path="res://assets/sprites/dialogo/e1_l1_diego.png" id="4_si1gr"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="4_t4yib"]
+[ext_resource type="Texture2D" uid="uid://qaodvqip1dxb" path="res://assets/sprites/dialogo/jugadora_complaciente.png" id="8_rjahh"]
 
 [sub_resource type="Theme" id="Theme_6oakp"]
 default_font = ExtResource("4_t4yib")
 default_font_size = 20
 
 [node name="Etapa1" type="Node2D"]
+script = ExtResource("1_6oakp")
 
 [node name="bg" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -77,3 +80,11 @@ offset_top = 481.0
 offset_right = 464.0
 offset_bottom = 526.0
 texture = ExtResource("4_si1gr")
+
+[node name="jugador_nombre" type="TextureRect" parent="."]
+visible = false
+offset_left = 290.0
+offset_top = 481.0
+offset_right = 464.0
+offset_bottom = 526.0
+texture = ExtResource("8_rjahh")
