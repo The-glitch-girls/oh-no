@@ -2,8 +2,12 @@ extends Node2D
 
 const SHIELD_SCENE: PackedScene = preload("res://scenes/components/Shield.tscn")
 const THOUGHT_SCENE: PackedScene = preload("res://scenes/components/IntrusiveThought.tscn")
+const PLAYER_EYES_CLOSED: Texture2D = preload(
+	"res://assets/sprites/personajeMiniGameojosCerrados.png"
+)
 
 @onready var player: CharacterBody2D = $Player
+@onready var player_sprite: Sprite2D = $Player/Sprite2D
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var round_timer: Timer = $RoundTimer
 
@@ -14,12 +18,17 @@ const THOUGHT_SCENE: PackedScene = preload("res://scenes/components/IntrusiveTho
 @onready var tint_rect: ColorRect = $HUD/EndOverlay/TintRect
 @onready var timeout_banner: TextureRect = $HUD/EndOverlay/TimeOutBanner
 @onready var timeout_label: Label = $HUD/EndOverlay/TimeOutBanner/TimeOutLabel
+@onready var instructions_banner: TextureRect = $HUD/Instrucciones/TextureRect
 
 @onready var result_bar: Control = $HUD/ResultBar
 @onready var bar_background: TextureRect = $HUD/ResultBar/BarBackground
 @onready var bar_indicator: TextureRect = $HUD/ResultBar/BarIndicator
+@onready var instructions: Control = $HUD/Instrucciones
 
 @onready var msx_player: AudioStreamPlayer2D = $AudioMinijuego
+@onready var wrong_sound: AudioStreamPlayer = $Control/WrongSound
+@onready var right_sound: AudioStreamPlayer = $Control/RightSound
+@onready var time_over_sound: AudioStreamPlayer = $Control/TimeOverSound
 
 var shields_spawned: int = 0
 var thoughts_spawned: int = 0
@@ -33,6 +42,8 @@ var finish_reason: String = ""
 var level_settings: Dictionary = {}
 var screen_color_name: String = ""
 var screen_color_tween: Tween
+var blink_enabled: bool = true
+var player_open_eyes_texture: Texture2D
 
 
 func _ready() -> void:
@@ -60,13 +71,71 @@ func _ready() -> void:
 	if not round_timer.timeout.is_connected(_on_time_finished):
 		round_timer.timeout.connect(_on_time_finished)
 
-	round_timer.start()
+	instructions.show()
+	var instructions_target_y: float = instructions_banner.position.y
+	var instructions_hidden_y: float = instructions_target_y + 720.0
+	instructions_banner.position.y = instructions_hidden_y
+	var instructions_tween: Tween = create_tween()
+	instructions_tween.set_trans(Tween.TRANS_CUBIC)
+	instructions_tween.set_ease(Tween.EASE_OUT)
+	instructions_tween.tween_property(
+		instructions_banner,
+		"position:y",
+		instructions_target_y,
+		0.65
+	)
+	player.set_physics_process(false)
 	msx_player.play()
+	player_open_eyes_texture = player_sprite.texture
+	_blink_loop()
+	await get_tree().create_timer(1.35).timeout
+	if not is_inside_tree():
+		return
+	var instructions_out_tween: Tween = create_tween()
+	instructions_out_tween.set_trans(Tween.TRANS_CUBIC)
+	instructions_out_tween.set_ease(Tween.EASE_IN)
+	instructions_out_tween.tween_property(
+		instructions_banner,
+		"position:y",
+		instructions_hidden_y,
+		0.65
+	)
+	await instructions_out_tween.finished
+	if not is_inside_tree():
+		return
+	instructions.hide()
+	player.set_physics_process(true)
+
+	round_timer.start()
 	_spawn_object()
 
 
+func _blink_loop() -> void:
+	while is_inside_tree():
+		if not blink_enabled:
+			await get_tree().create_timer(0.1).timeout
+			continue
+		for blink_index in range(2):
+			player_sprite.texture = PLAYER_EYES_CLOSED
+			await get_tree().create_timer(0.15).timeout
+			if not is_inside_tree():
+				return
+			if not blink_enabled:
+				break
+			player_sprite.texture = player_open_eyes_texture
+			if blink_index == 0:
+				await get_tree().create_timer(0.15).timeout
+				if not is_inside_tree():
+					return
+				if not blink_enabled:
+					break
+		if not blink_enabled:
+			continue
+		await get_tree().create_timer(3.0).timeout
+
+
 func _process(_delta: float) -> void:
-	if not round_finished:
+	if not round_finished and round_timer.time_left > 0.0:
 		time_label.text = _format_time(round_timer.time_left)
 
 
@@ -125,6 +194,7 @@ func _on_shield_collected() -> void:
 	if round_finished:
 		return
 
+	right_sound.play()
 	shields_caught += 1
 
 	if shields_caught >= GlobalManager.META_ESCUDOS:
@@ -135,11 +205,13 @@ func _on_thought_caught() -> void:
 	if round_finished:
 		return
 
+	wrong_sound.play()
 	thoughts_caught += 1
 	shields_caught = maxi(0, shields_caught - 1)
 
 
 func _on_time_finished() -> void:
+	time_over_sound.play()
 	_finish_round("timeout")
 
 
@@ -213,9 +285,10 @@ func _play_end_sequence() -> void:
 	tint_rect.modulate.a = 0.0
 
 	if finish_reason == "timeout":
-		timeout_label.text = "¡Se acabó el tiempo!"
+		timeout_label.text = "SE ACABÓ EL TIEMPO"
 		timeout_banner.modulate.a = 0.0
 		timeout_banner.show()
+		blink_enabled = false
 		var timeout_intro_tween: Tween = create_tween()
 		timeout_intro_tween.tween_property(
 			multiply_rect,
@@ -244,6 +317,8 @@ func _play_end_sequence() -> void:
 		)
 		await banner_out_tween.finished
 		timeout_banner.hide()
+		player_sprite.texture = player_open_eyes_texture
+		blink_enabled = true
 		await get_tree().create_timer(2.0).timeout
 	else:
 		var result_intro_tween: Tween = create_tween()
@@ -299,20 +374,12 @@ func _animate_result_indicator() -> void:
 	var bar_top: float = bar_background.position.y
 	var bar_bottom: float = bar_top + bar_background.size.y
 
-	var indicator_x: float = (
-		bar_background.position.x
-		+ (bar_background.size.x - bar_indicator.size.x) / 2.0
-	)
-
-	var indicator_bottom_y: float = (
-		bar_bottom - bar_indicator.size.y / 2.0
-	)
+	var indicator_bottom_y: float = bar_bottom - bar_indicator.size.y
 
 	var indicator_target_y: float = (
-		bar_bottom
+		bar_bottom - bar_indicator.size.y
 		- (float(shields_caught) / float(GlobalManager.META_ESCUDOS))
-		* bar_background.size.y
-		- bar_indicator.size.y / 2.0
+		* (bar_background.size.y - bar_indicator.size.y)
 	)
 
 	indicator_target_y = clampf(
@@ -321,10 +388,7 @@ func _animate_result_indicator() -> void:
 		bar_bottom - bar_indicator.size.y
 	)
 
-	bar_indicator.position = Vector2(
-		indicator_x,
-		indicator_bottom_y
-	)
+	bar_indicator.position.y = indicator_bottom_y
 
 	var indicator_tween: Tween = create_tween()
 	indicator_tween.set_trans(Tween.TRANS_CUBIC)
