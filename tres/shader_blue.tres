@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bqwmuj767xacx"]
+
+[ext_resource type="Shader" uid="uid://vpd2a4w2fk0d" path="res://shaders/iris_transition.gdshader" id="1_6qtnp"]
+
+[resource]
+shader = ExtResource("1_6qtnp")
+shader_parameter/iris_radius = 1.2
+shader_parameter/edge_softness = 0.012

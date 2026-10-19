@@ -20,6 +20,11 @@ extends Node2D
 	transition_overlay.material as ShaderMaterial
 )
 
+@onready var transition_overlay_blue: ColorRect = $HUD/TransitionOverlayBlue
+@onready var transition_material_blue: ShaderMaterial = (
+	transition_overlay_blue.material as ShaderMaterial
+)
+
 const FILE_PATH = "res://assets/data/niveles.json"
 const VELOCIDAD_ESCRITURA = 0.035
 
@@ -120,14 +125,12 @@ func _siguiente_enemigo() -> void:
 	var siguiente_indice: int = GlobalManager.enemigoActual + 1
 	
 	if siguiente_indice >= nivel_enemigos.size():
-		print("No hay más enemigos en esta etapa.")
-		# TODO transicion
-		#await _transicion_siguiente()
+		await _mostrar_transicion()
 		_siguiente_nivel()
 		return
 	
-	# TODO transicion
-	#await _transicion_siguiente()
+	await _mostrar_transicion()
+
 	GlobalManager.enemigoActual = siguiente_indice
 	enemigo_actual = nivel_enemigos[siguiente_indice]
 	
@@ -504,6 +507,18 @@ func _siguiente_nivel() -> void:
 			)
 		_:
 			print("No hay más niveles implementados.")
+			
+func _mostrar_transicion() -> void:
+	transition_overlay_blue.show()
+	transition_material_blue.set_shader_parameter("iris_radius", 0.0)
+	var iris_open_tween: Tween = create_tween()
+	iris_open_tween.tween_property(
+		transition_material_blue,
+		"shader_parameter/iris_radius",
+		1.2,
+		0.7
+	)
+	iris_open_tween.finished.connect(transition_overlay.hide)
 			
 func _on_btn_minijuego_pressed() -> void:
 	btnMinijuego.disabled = true

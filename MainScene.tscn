@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://1wy5aytfl7r8" path="res://scripts/main_scene.gd" id="1_3mqji"]
 [ext_resource type="Texture2D" uid="uid://dv204woikx0s2" path="res://assets/sprites/background/bgDiario.png" id="2_5crlr"]
-[ext_resource type="Texture2D" uid="uid://bt6rfoc8ucp6u" path="res://assets/sprites/logo/logo_justsay.png" id="2_rpqi1"]
-[ext_resource type="Texture2D" uid="uid://d0wrxf0t0ta2o" path="res://assets/sprites/logo/logo_no.png" id="3_uxrcv"]
+[ext_resource type="Texture2D" uid="uid://cg1qmkie3alhu" path="res://assets/sprites/logo/logo_justsay2.png" id="3_mctxq"]
+[ext_resource type="Texture2D" uid="uid://cfhydggvc488g" path="res://assets/sprites/logo/NO.png" id="4_nm5af"]
 [ext_resource type="Texture2D" uid="uid://b78bujg8cvnt1" path="res://assets/sprites/botones/btnInicio_normal.png" id="5_8xkvn"]
 [ext_resource type="FontFile" uid="uid://cqncustj430vy" path="res://assets/fonts/Schoolbell/Schoolbell-Regular.ttf" id="6_5crlr"]
 [ext_resource type="Texture2D" uid="uid://cxnekixvq7yky" path="res://assets/sprites/botones/btnInicio_pressed.png" id="6_p5x2j"]
@@ -121,7 +121,6 @@ offset_bottom = 720.0
 texture = ExtResource("2_5crlr")
 
 [node name="Container" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -133,20 +132,20 @@ scale = Vector2(1.00094, 1.00799)
 [node name="Logo_JustSay" type="TextureRect" parent="Container"]
 layout_mode = 2
 offset_left = 286.73
-offset_top = 187.502
-offset_right = 915.73
-offset_bottom = 570.502
-rotation = -0.10472
-texture = ExtResource("2_rpqi1")
+offset_top = 178.502
+offset_right = 961.73
+offset_bottom = 633.502
+rotation = -0.0872665
+texture = ExtResource("3_mctxq")
 
 [node name="Logo_NO" type="TextureRect" parent="Container"]
 layout_mode = 2
-offset_left = 668.372
-offset_top = 406.75
-offset_right = 930.372
-offset_bottom = 636.75
+offset_left = 660.379
+offset_top = 398.813
+offset_right = 962.379
+offset_bottom = 671.813
 rotation = -0.139626
-texture = ExtResource("3_uxrcv")
+texture = ExtResource("4_nm5af")
 
 [node name="decoEquis" type="TextureRect" parent="."]
 layout_mode = 0

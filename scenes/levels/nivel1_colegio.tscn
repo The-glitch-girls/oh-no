@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://wpm5hcni5158"]
+[gd_scene load_steps=23 format=3 uid="uid://wpm5hcni5158"]
 
 [ext_resource type="Script" uid="uid://d38rribceg05o" path="res://scripts/levels/nivel_1_colegio.gd" id="1_6oakp"]
 [ext_resource type="Texture2D" uid="uid://3x10fm6nct7y" path="res://assets/sprites/background/bgEtapa1.png" id="1_mjf5d"]
@@ -17,7 +17,7 @@
 [ext_resource type="Shader" uid="uid://d0ij0g055m5qe" path="res://shaders/autoestima_barra.gdshader" id="13_q472x"]
 [ext_resource type="Texture2D" uid="uid://go13mp1l6ho3" path="res://assets/sprites/hud/barra_autoestima_icon.png" id="14_jhijq"]
 [ext_resource type="AudioStream" uid="uid://c0fjytk8uns12" path="res://assets/sounds/msx_novel.ogg" id="16_kscvh"]
-[ext_resource type="Shader" uid="uid://vpd2a4w2fk0d" path="res://shaders/iris_transition.gdshader" id="iris_shader"]
+[ext_resource type="Material" uid="uid://bqwmuj767xacx" path="res://tres/shader_blue.tres" id="17_efhic"]
 
 [sub_resource type="Theme" id="Theme_6oakp"]
 default_font = ExtResource("4_t4yib")
@@ -34,11 +34,6 @@ default_font = ExtResource("4_t4yib")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q472x"]
 shader = ExtResource("13_q472x")
 shader_parameter/progress = 0.25
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iris_transition"]
-shader = ExtResource("iris_shader")
-shader_parameter/iris_radius = 1.2
-shader_parameter/edge_softness = 0.012
 
 [node name="Etapa1" type="Node2D"]
 script = ExtResource("1_6oakp")
@@ -224,7 +219,7 @@ texture = ExtResource("14_jhijq")
 
 [node name="TransitionOverlay" type="ColorRect" parent="HUD"]
 visible = false
-material = SubResource("ShaderMaterial_iris_transition")
+material = ExtResource("17_efhic")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -232,6 +227,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="TransitionOverlayBlue" type="ColorRect" parent="HUD"]
+visible = false
+material = ExtResource("17_efhic")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.231373, 0, 0.843137, 1)
 
 [node name="AudioNovela" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_kscvh")

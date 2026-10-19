@@ -16,7 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://htwuqn5ypbum" path="res://assets/sounds/sfx/correct.mp3" id="13_qoybj"]
 [ext_resource type="AudioStream" uid="uid://d1xiy5uxwbp0m" path="res://assets/sounds/sfx/game_over.mp3" id="14_3opo0"]
 [ext_resource type="AudioStream" uid="uid://cvwtddef8bt6q" path="res://assets/sounds/sfx/spin.mp3" id="15_spin"]
-[ext_resource type="Shader" path="res://shaders/iris_transition.gdshader" id="iris_shader"]
+[ext_resource type="Shader" uid="uid://vpd2a4w2fk0d" path="res://shaders/iris_transition.gdshader" id="iris_shader"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1te6h"]
 size = Vector2(58, 73)

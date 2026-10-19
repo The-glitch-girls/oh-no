@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt6rfoc8ucp6u"
-path="res://.godot/imported/logo_justsay.png-892a9ea531b877a005ac76f5f0039528.ctex"
+uid="uid://cg1qmkie3alhu"
+path="res://.godot/imported/logo_justsay2.png-5aff24d36359fb0181e6727305e12e79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/logo/logo_justsay.png"
-dest_files=["res://.godot/imported/logo_justsay.png-892a9ea531b877a005ac76f5f0039528.ctex"]
+source_file="res://assets/sprites/logo/logo_justsay2.png"
+dest_files=["res://.godot/imported/logo_justsay2.png-5aff24d36359fb0181e6727305e12e79.ctex"]
 
 [params]
 
